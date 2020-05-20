@@ -1,0 +1,34 @@
+﻿@model AR.ARNews.User
+@{
+    ViewData["Title"] = "User details";
+}
+
+<style>
+    .InnerWrapper input {
+        padding: 5px;
+        margin: 5px;
+    }
+</style>
+
+<div class="InnerWrapper">
+    @using (Html.BeginForm("AUpdate", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <button type="button" onclick="window.history.back()">< back</button><br /><br />
+        <button type="button" onclick="window.location.href='/User/ResetPW?ID=@Model.UserID'" style="float: right">Reset password</button>
+        @Html.HiddenFor(k => k.UserID);
+        <label>ID:</label>@Model.UserID<br />
+        <label>Username:</label>@Html.EditorFor(k => k.Username)<br />
+        <label>Display name:</label>@Html.EditorFor(k => k.Nickname)<br /><br />
+        <label>Type:</label>@Html.DropDownListFor(k => k.Type, new SelectList(new List<Tuple<int, string>>() {
+            new Tuple<int, string>(0, "User"),
+            new Tuple<int, string>(1, "Administrator"),
+            new Tuple<int, string>(2, "Subscriber")
+            }, "Item1", "Item2"))<br />
+        <br />
+        <label>Subscribed monts:</label>@Html.EditorFor(k => k.SubMonts)
+        <br />
+        <br />
+        <br />
+        <button type="submit">Update</button>
+    }
+</div>

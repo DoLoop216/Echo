@@ -1,0 +1,184 @@
+﻿@model AR.ARNews.Clanak
+@{
+    ViewData["Title"] = "Edit story";
+}
+
+<style>
+    #Naslov {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    #GrupaID, #Status {
+        height: 30px;
+        width: 100%;
+        margin-left: 2%;
+    }
+
+    input {
+        border: 1px solid gray;
+        background-color: whitesmoke;
+        padding: 5px;
+        border-radius: 20px 20px 20px 20px;
+    }
+
+    #Tekst {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+
+    #Publish_btn, #Update_btn {
+        float: right;
+    }
+
+
+    #Thumbnail {
+        width: 100%;
+        text-align: center;
+        position: relative;
+        padding-bottom: 47.5%;
+        height: 0;
+        border: 2px solid gray;
+    }
+
+        #Thumbnail:hover {
+            cursor: pointer;
+            border: 2px solid red;
+        }
+
+        #Thumbnail img {
+            max-width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+    .PerDel {
+        color: red;
+    }
+
+        .PerDel:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+</style>
+@using (Html.BeginForm("pUpdate", "Story", FormMethod.Post))
+{
+    @Html.HiddenFor(x => x.ClanakID)
+    @Html.HiddenFor(x => x.KorisnikID)
+    @Html.HiddenFor(x => x.Slika)
+    @Html.HiddenFor(x => x.Visits)
+    @Html.HiddenFor(x => x.Tekst);
+    <div class="InnerWrapper" style="font-family: Raleway">
+        <div class="row">
+            <div class="col-md-9">
+                <div style="display: inline-block; margin-bottom: 20px">
+                    <h2>Edit story</h2>
+                    @Html.TextBoxFor(x => x.Naslov)
+                    <div id="Text" name="Text">@Html.Raw(Model.Tekst)</div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>Group</label>
+                @Html.DropDownListFor(x => x.GrupaID, new SelectList(GrupaModel.List(), "GrupaID", "Naziv"))
+                <br />
+                <br />
+                <label>Status</label>
+                @Html.DropDownListFor(x => x.Status, new SelectList(new List<Tuple<int, string>>() { new Tuple<int, string>(1, "Published"), new Tuple<int, string>(0, "Hidden") }, "Item1", "Item2"))
+                <br />
+                <br />
+                <label>Date:</label>
+                @Html.EditorFor(x => x.Datum)
+                <br />
+                <br />
+                <button style="display: block; width: 100%; margin-bottom: 10px;">Update</button>
+
+                <span class="PerDel" onclick="PermaDel()">Permanent löschen</span>
+                <br />
+                <br />
+                <p style="font-family: Raleway-Bold">Thumbnail</p>
+
+                <div id="Thumbnail">
+                    <img src="@Model.Slika" onclick="OpenGallery()" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <partial name="pGallery" model="new Media()" />
+}
+
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+    var toolbarOptions = [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        ['blockquote', 'code-block'],
+
+        [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
+        [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
+        [{ 'direction': 'rtl' }],                         // text direction
+
+        [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+        [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+        [{ 'font': [] }],
+        [{ 'align': [] }],
+
+        ['clean']                                         // remove formatting button
+    ];
+    var options = {
+        theme: 'snow',
+        placeholder: 'Start writing here!',
+        modules: {
+            toolbar: toolbarOptions
+        }
+    };
+
+    var quill = new Quill('#Text', options);
+
+    $(function () {
+        $(window).scroll(function (event) {
+            var scroll = $(window).scrollTop();
+
+            $("#StoryControls").css("margin-top", scroll);
+        });
+        var scroll = $(window).scrollTop();
+
+        $("#StoryControls").css("margin-top", scroll);
+    });
+
+
+    function PermaDel() {
+        if (confirm("Möchten Sie diese Story wirklich dauerhaft löschen?")) {
+            window.location.href = '/Story/ADelete?ID=@Model.ClanakID';
+        }
+    }
+
+    function OpenGallery() {
+        $("#Gallery").show();
+    }
+
+    $(function () {
+        $(document).on('click', ".GalleryItem", function () {
+            var link = $(this).attr("src");
+            $("#Thumbnail img").attr("src", link);
+            $("#Slika").val(link);
+            $("#Gallery").hide();
+        });
+
+        $("#Text").keydown(function () {
+            $("#Tekst").val($("#Text .ql-editor").html());
+        });
+    });
+
+
+</script>

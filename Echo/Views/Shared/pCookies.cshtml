@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "pCookies";
+}
+
+<style>
+    #Cookies {
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        background-color: #cecece;
+        z-index: 9999;
+        text-align: center;
+        font-family: Raleway-Bold;
+        font-size: small;
+        border-top: 3px solid #e1000f;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    #Cookies .clos {
+        background-color: #e1000f;
+        color: white;
+        font-family: Raleway-Bold;
+        border-radius: 5px;
+        border: none;
+        padding: 5px 15px 5px 15px;
+    }
+
+    #Cookies .clos:hover {
+        cursor: pointer;
+        background-color: white;
+        color: #e1000f;
+    }
+
+</style>
+<div id="Cookies">
+    <p style="margin-top: 0px; margin-bottom: 2px">
+        Diese Seite verwendet Cookies. 
+        Wenn Sie weiterhin auf der Website surfen, 
+        stimmen Sie der Verwendung von Cookies zu.
+        <br />  
+        <a href="/Home/Cookies">
+            Weitere Informationen finden Sie in unseren Cookie-Informationen.
+        </a>
+</p>
+    <button class="clos" onclick="$(this).parent().hide();" style="margin-top: 5px; margin-bottom: 5px">SCHLIESSEN</button>
+</div>

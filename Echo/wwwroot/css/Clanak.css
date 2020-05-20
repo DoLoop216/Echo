@@ -1,0 +1,26 @@
+﻿#Clanak {
+    position: relative;
+    max-width: 1100px;
+    margin: 20px auto;
+    font-family: Montserrat-Regular;
+}
+
+    #Clanak .Grupa {
+        background-color: red;
+        padding: 5px;
+        color: white;
+        font-family: Montserrat-Regular;
+    }
+
+    #Clanak .Naslov {
+        font-size: xx-large;
+        font-weight: bolder;
+        margin-top: 10px;
+        display: block;
+        font-family: Montserrat-Bold;
+    }
+
+    #Clanak .ql-editor {
+        padding: 0;
+        font-family: Montserrat-Regular;
+    }

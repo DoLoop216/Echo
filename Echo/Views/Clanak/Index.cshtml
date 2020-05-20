@@ -1,0 +1,118 @@
+﻿@model AR.ARNews.Clanak
+@{
+    ViewData["Title"] = Model.Naslov;
+
+    Echo.Controllers.StoryController._AMarkVisit(Model.ClanakID);
+
+    bool admin = false;
+
+    if(Networking.isAdmin(Context.Request))
+    {
+        admin = true;
+    }
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0));
+    int DisplayNSmallAds = 2;
+}
+
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="~/css/Clanak.css" />
+<div id="Clanak">
+    @if (admin)
+    {
+        <style>
+            #EditButton {
+                background-color: #e1000f;
+                color: white;
+                border: 2px solid white;
+                border-radius: 5px;
+                padding: 5px 15px 5px 15px;
+                margin-bottom: 10px;
+            }
+
+                #EditButton:hover {
+                    background-color: white;
+                    color: #e1000f;
+                    border: 2px solid #e1000f;
+                    cursor: pointer;
+                }
+        </style>
+        if(Model.Status == AR.ARNews.ClanakStatus.Draft)
+        {
+            <span style="color: red; font-weight: bolder; font-size: large">
+                This article is hidden from normal visitors!<br />Edit to make it visible!<br /></span>
+            <br />
+        }
+        <button id="EditButton" onclick="window.location.href='/Story/Edit?ID=@Model.ClanakID'">Edit</button>
+    }
+    <div class="row">
+        <div class="col-sm-8" style="padding: 10px; padding-left: 20px; padding-right: 20px">
+            @if (admin)
+            {
+                <h4>Views: @Model.Visits</h4><br />
+            }
+            <span class="Grupa" style="font-size: x-small">@AR.ARNews.Grupa.GetNaziv(Model.GrupaID)</span>
+            <img src="~/images/calender.png" style="height: 20px; margin-left: 10px; transform: translateY(-3px);" />
+            <span style="color: gray; margin-left: 3px; font-weight: bolder; font-size: x-small; font-family: Montserrat-Regular;">@Model.Datum.ToString("dd/MM/yyyy")</span>
+            <br />
+            <span class="Naslov">@Model.Naslov</span>
+            <img src="@Model.Slika" style="width: 100%; padding-top: 30px; padding-bottom: 5px" />
+            <div class="ql-editor">
+                @Html.Raw(@Model.Tekst)
+            </div>
+        </div>
+        <div class="col-sm-1">
+            &nbsp;
+        </div>
+        <div class="col-sm-3">
+            <partial name="pShortlist">
+                <hr style="border: 3px solid red; background-color: none; width: 40%; margin-left: 0" />
+                @{
+                    SideBanners.Shuffle();
+                    if (SideBanners != null && SideBanners.Count <= DisplayNSmallAds)
+                    {
+                        foreach (AR.ARNews.Banner b in SideBanners)
+                        {
+                            if (b.Position == 0)
+                            {
+                                <div class="Banner" style="height: 250px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="Banner" style="height: 500px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                        }
+                    }
+                    else if (SideBanners != null)
+                    {
+                        int limit = 0;
+                        foreach (AR.ARNews.Banner b in SideBanners)
+                        {
+                            if (b.Position == 0)
+                            {
+                                <div class="Banner" style="height: 250px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="Banner" style="height: 500px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            limit++;
+                            if (limit >= DisplayNSmallAds)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+</div>
+    </div>
+</div>
+

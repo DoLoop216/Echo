@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Products";
+    bool admin = false;
+
+    if (Networking.isAdmin(Context.Request))
+    {
+        admin = true;
+    }
+}
+
+<script>
+    $(function () {
+        $("#MenuProducts").addClass("active");
+    });
+</script>
+<style>
+
+
+    .product {
+        position: relative;
+        width: 17%;
+        overflow: hidden;
+        float: left;
+        margin: 1.5%;
+    }
+
+        .product img {
+            width: 100%;
+        }
+
+    .rem {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #e1000f;
+        color: white;
+        padding: 2px 7px 2px 7px;
+    }
+
+        .rem:hover {
+            cursor: pointer;
+            background-color: deepskyblue;
+        }
+</style>
+
+<div class="InnerWrapper" style="font-family: Raleway">
+    <div class="row">
+        <br />
+        <div class="col-lg-9">
+            <span class="Title">ECHO</span><br /><br />
+            @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1337))
+            {
+                <div class="product">
+                    <img src="@b.Image" />
+                    @if (admin)
+                    {
+                        <span class="rem" onclick="RemoveAD(@b.BannerID)">-</span>
+                    }
+                </div>
+            }
+            @if (admin)
+            {
+                <button style="
+                    width: 100%;
+                    background-color: #e1000f;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    font-weight: bolder;
+                    padding: 20px 0 10px 0;
+                    margin-top: 10px;
+                    margin-bottom: 10px"
+                        onclick="window.location.href='/ControlPanel/UploadNewProduct'">
+                    Add
+                </button>
+            }<br /><br />
+            <div style="display: inline-block">
+                <span class="Title" style="display: inline-block">CORPORATE PUBLISHING</span><br /><br />
+
+                @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1338))
+                {
+                    <div class="product">
+                        <img src="@b.Image" />
+                        @if (admin)
+                        {
+                            <span class="rem" onclick="RemoveAD(@b.BannerID)">-</span>
+                        }
+                    </div>
+                }
+                @if (admin)
+                {
+                    <button style="
+                    width: 100%;
+                    background-color: #e1000f;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    font-weight: bolder;
+                    padding: 20px 0 10px 0;
+                    margin-top: 10px;
+                    margin-bottom: 10px"
+                            onclick="window.location.href='/ControlPanel/UploadNewProduct'">
+                        Add
+                    </button>
+                }
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <br />
+            <partial name="pShortlist" />
+        </div>
+    </div>
+</div>
+
+<script>
+    function RemoveAD(id) {
+        window.location.href = "/ControlPanel/ARemoveProduct?ID=" + id;
+    }
+</script>

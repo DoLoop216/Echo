@@ -1,0 +1,6 @@
+﻿GRUPAID
+
+0 = Science
+1 = Buissiness
+2 = Economics
+3 = Politik

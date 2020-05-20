@@ -1,0 +1,115 @@
+﻿
+<style>
+    #Header {
+        height: 65px;
+        background-color: #e1000f;
+    }
+        #Header img {
+            height: 100%;
+        }
+
+        #Header .LoginButton {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            float: right;
+            margin-top: 8px;
+            border: none;
+            margin-right: 15px;
+            background-image: url(../../images/User.png);
+            background-size: cover;
+            background-color: transparent;
+        }
+            #Header .LoginButton:hover {
+                background-image: url(../../images/UserWhite.png);
+            }
+    #MainMenu {
+        background-color: #d5d5d5;
+        font-family: Montserrat-SemiBold-Regular;
+        font-weight: bolder;
+        color: #454545;
+    }
+        #MainMenu button {
+            border: none;
+            color: black;
+            border-radius: 0;
+            background-color: transparent;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+            position: relative;
+        }
+            #MainMenu button:hover {
+                background-color: #ff0600;
+                color: white;
+            }
+                #MainMenu button:hover .outHelper {
+                    display: block;
+                }
+
+            #MainMenu button .outHelper {
+                position: absolute;
+                height: 7px;
+                bottom: -5px;
+                display: none;
+                left: 0;
+                background-color: #ff0600;
+                width: 100%;
+            }
+
+    #LogoHeaderHome:hover {
+        cursor: pointer;
+    }
+
+    .active {
+        background-color: #ff0600 !important;
+        color: white !important;
+    }
+
+    .active .outHelper {
+        display: block !important;
+    }
+</style>
+<div style="position: fixed; width: 100%; margin: 0; left: 0; top: 0; z-index: 950" id="HeaderWrapper">
+    <div class="OutterWrapper" id="Header">
+        <div class="InnerWrapper" style="height: 100%">
+            <span id="MobileMenuIcon" hidden onclick="OpenMobileMenu()">&#9776;</span>
+            <img src="~/images/ECHO_logo_vector.svg" onclick="window.location.href='/'" id="LogoHeaderHome" />
+            <button class="LoginButton" onclick="window.location.href='/ControlPanel'"></button>
+        </div>
+    </div>
+    @if(Networking.isAdmin(Context.Request))
+    {
+        @:<div class="OutterWrapper" id="MainMenu" style="background-color: #efc142">
+    }
+    else
+    {
+        @:<div class="OutterWrapper" id="MainMenu">
+    }
+    <div class="InnerWrapper">
+        <button id="MenuHome" onclick="window.location.href='/'">HOME<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuThePublisher" onclick="window.location.href='/Home/ThePublisher'">DER VERLAG<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuProducts" onclick="window.location.href='/Home/Products'">PRODUKTE<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuTop500" onclick="window.location.href='/Home/Top500'">TOP 500<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuNews" onclick="window.location.href='/Home/News'">NEWS<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuArchieve" onclick="window.location.href='/Home/Archieve'">ARCHIV<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuMediaData" onclick="window.location.href='/Home/MediaData'">MEDIADATEN<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuContact" onclick="window.location.href='/Home/Contact'">KONTAKT<span class="outHelper">&nbsp;</span></button>
+        <button id="MenuSubscription" onclick="window.location.href='/Home/Subscription'">ABO<span class="outHelper">&nbsp;</span></button>
+    </div>
+</div>
+<span id="MobileCloseMenu" onclick="CloseMobileMenu()" hidden>X</span>
+</div>
+
+<script>
+    function OpenMobileMenu() {
+        $("#MainMenu").show();
+        $("#MobileCloseMenu").show();
+    }
+
+    function CloseMobileMenu() {
+        $("#MobileCloseMenu").hide();
+        $("#MainMenu").hide();
+    }
+</script>

@@ -1,0 +1,26 @@
+﻿@model AD
+@{
+    ViewData["Title"] = "UploadNewProduct";
+}
+
+<div class="InnerWrapper">
+    @using (Html.BeginForm("AUploadProduct", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <select asp-for="Type">
+            <option value="1337" selected>Echo</option>
+            <option value="1338">Other</option>
+        </select>
+        <br />
+        <br />
+        <input id="File" type="file" asp-for="File" accept="image/jpeg" style="float: left" />
+
+        <br />
+        <br />
+
+        <label>Redirect: </label>
+        <input type="text" asp-for="Redirect" />
+        <br />
+        <br />
+        <button type="submit">Upload</button>
+    }
+</div>

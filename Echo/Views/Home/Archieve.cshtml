@@ -1,0 +1,102 @@
+﻿@model int?
+@{
+    ViewData["Title"] = "Archieve";
+    List<AR.ARNews.Clanak> clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings());
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/Home/Archieve.css" />
+<div class="InnerWrapper" style="font-family: Montserrat">
+    <h2 class="Title">Archieve</h2>   
+    
+
+    <input id="FilterArcSearch" type="text" placeholder="Search..." />
+    <div id="FilterArc" style="">
+        <span style="position: absolute; top: -10px;left: 15px;background-color: white;padding: 1px 20px 0px 20px;font-family: Raleway-Bold;">Filter</span>
+        <div id="FilterArcCategory" style="padding: 5px;">
+            <span style="font-family: Raleway-Bold">Kategorie: </span>
+            <button class="FilterButton selected" data-grupaid="-1" onclick="ChangeCategory(this)">Alles</button>
+            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+            {
+                <button class="FilterButton" onclick="ChangeCategory(this)" data-grupaid="@g.GrupaID">@g.Naziv</button>
+            }
+        </div>
+    </div>
+    <div style="display: inline-block; width: 100%">
+        @foreach (AR.ARNews.Clanak c in clanci)
+        {
+            <div onclick="window.location.href='/Clanak?ID=@c.ClanakID'" class="Clanak" data-grupaid="@c.GrupaID">
+                <div class="Thumbnail" style="background-image: url('@c.Slika.Replace('\\', '/')')"></div>
+                <div class="infoLine">
+                    <span class="Group">@AR.ARNews.Grupa.GetNaziv(c.GrupaID)</span>
+                    <span class="Date">@c.Datum.ToString("dd.MMM.yyyy")</span>
+                </div>
+                <h2 class="Title">@c.Naslov</h2>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    var filterGroupSelected = @Html.Raw((Model == null) ? "-1" : Model.ToString());
+    var displayedGroup = -1;
+
+    function ChangeCategory(element) {
+        $("#FilterArcCategory").children(".FilterButton").each(function () {
+            if ($(this).attr("data-grupaid") != $(element).attr("data-grupaid")) {
+                $(this).removeClass("selected");
+            } else {
+                $(this).addClass("selected");
+                filterGroupSelected = $(this).attr("data-grupaid");
+            }
+        });
+
+        ApplyFilter();
+    }
+
+
+    function ApplyFilter() {
+        displayedGroup = filterGroupSelected;
+        $(".Clanak").each(function () {
+            if ($(this).attr("data-grupaid") == filterGroupSelected || filterGroupSelected == -1) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
+
+    $(function () {
+        $(".FilterButton[data-grupaid=@Html.Raw((Model == null) ? "-1" : Model.ToString())]").click();
+        $("#FilterArcSearch").keyup(function () {
+            var sv = $(this).val();
+            $(".Clanak").each(function () {
+                if ($(this).attr("data-grupaid") == displayedGroup) {
+                    if ($(this).children(".cccc").children(".Grupa").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0
+                        || $(this).children(".cccc").children(".Datum").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0
+                        || $(this).children(".cccc").children(".Title").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                }
+            });
+        });
+
+        $("#FilterArcSearch").keyup(function () {
+            var sv = $(this).val();
+            if (sv == null || sv.length < 1) {
+                $(".Clanak").show();
+            } else {
+                $(".Clanak").each(function () {
+                    if ($(this).html().toLowerCase().indexOf(sv.toLocaleLowerCase()) >= 0) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+
+        ApplyFilter();
+    });
+</script>

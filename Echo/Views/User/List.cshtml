@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Users";
+    List<AR.ARNews.User> users = AR.ARNews.User.List();
+}
+
+<style>
+    .highlightable:hover {
+        cursor: pointer;
+        background-color: lightcoral;
+        color: white;
+    }
+
+    .InnerWrapper td {
+        padding: 5px;
+    }
+</style>
+
+<div class="InnerWrapper">
+    <button onclick="window.location.href='/User/New'">Create new</button>
+    <br />
+    <br />
+    <table style="width: 100%">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Nickname</th>
+            <th>Type</th>
+        </tr>
+        @foreach (AR.ARNews.User u in users)
+        {
+            <tr class="highlightable" onclick="window.location.href='/User?ID=@u.UserID'">
+                <td>@u.UserID</td>
+                <td>@u.Username</td>
+                <td>@u.Nickname</td>
+                <td>@u.Type.ToString()</td>
+            </tr>
+        }
+        </table>
+</div>

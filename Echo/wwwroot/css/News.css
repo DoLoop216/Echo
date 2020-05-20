@@ -1,0 +1,27 @@
+﻿.newsContainer {
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    border-bottom: 2px solid gray;
+    margin-bottom: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-family: Montserrat;
+}
+
+.newsContainerImage {
+    width: 100%;
+    height: 370px;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.newsContainer a:hover {
+    cursor: pointer;
+}
+
+.newsContainerTitle {
+    font-family: Montserrat-Bold;
+}

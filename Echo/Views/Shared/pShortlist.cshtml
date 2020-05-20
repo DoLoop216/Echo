@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "pShortlist";
+    List<AR.ARNews.Clanak> list = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings());
+    int i = 0;
+}
+
+<div id="Shortlist">
+    <h4 style="
+        margin: 0;
+        padding: 12px 5px 12px 20px;
+        background-color: #d4000e;
+        color: white;
+        font-family: Montserrat-Bold;
+        border-bottom: 5px solid #bc000d;">
+        DAS NEUSTE
+        <img src="~/images/letter.png" style="float: right; margin-right: 5px" />
+    </h4>
+    <div style="background-color: #ececec; border-bottom: 5px solid #dadada">
+        <br />
+        @foreach (AR.ARNews.Clanak c in list)
+        {
+            if(i >= 5)
+            {
+                break;
+            }
+            <div style="width: 100%" class="slClanak">
+                <span onclick="window.location.href='/Clanak?ID=@c.ClanakID'"><span class="num">@(i + 1)</span> @c.Naslov</span>
+            </div>
+            i++;
+        }
+        <br />
+    </div>
+</div>
+

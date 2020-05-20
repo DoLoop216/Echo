@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewData["Title"] = "Subscription";
+}
+
+
+<script>
+    $(function () {
+        $("#MenuSubscription").addClass("active");
+    });
+</script>
+<style>
+    #ContactForm {
+        max-width: 400px;
+        margin: auto;
+        background-color: #efefef;
+        text-align: center;
+        position: relative;
+        padding-top: 20px;
+        border-top: 4px solid #e1000f;
+        border-bottom: 4px solid #e1000f;
+        margin-bottom: 50px;
+    }
+
+        #ContactForm input, #ContactForm textarea, #ContactForm select {
+            width: 80%;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            font-size: 13px;
+            padding: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            font-family: Raleway-Regular;
+        }
+
+        #ContactForm button {
+            background-color: #e1000f;
+            border: none;
+            color: white;
+            font-family: Raleway-Bold;
+            font-size: 12px;
+            border-radius: 3px;
+            padding: 10px 25px 10px 25px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        #ContactForm select {
+            background-color: lightyellow;
+        }
+
+            #ContactForm select:hover {
+                cursor: pointer;
+            }
+</style>
+
+<div class="InnerWrapper">
+    <div id="Subscription">
+        <div id="ContactForm">
+            <h3 style="
+                font-family: Raleway-Regular;
+                color: #4c4145;
+                margin: 0;
+                margin-bottom: 20px">
+                ABO ECHO SALZBURG
+            </h3>
+            <select>
+                <option value="0">3 Monate kostenlos</option>
+                <option value="1">14  Ausgaben um nur € 28,--</option>
+            </select>
+            <br />
+            <input placeholder="Name" /><br />
+            <input placeholder="Straße" />
+            <input placeholder="Nr." /><br />
+            <input placeholder="PLZ" />
+            <input placeholder="Ort" /><br />
+            <input placeholder="Land" /><br />
+            <input placeholder="Telefon" /><br />
+            <input placeholder="Email" /><br />
+            <button id="ContactUsSubmit">ABSENDEN</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $("#ContactUsSubmit").click(function () {
+            window.location.href = "/Home/Success?msg=Sie haben sich erfolgreich beworben. Wir werden uns umgehend bei Ihnen melden!";
+        });
+    });
+</script>

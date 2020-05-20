@@ -1,0 +1,33 @@
+﻿@model AR.ARNews.User
+@{
+    ViewData["Title"] = "New";
+}
+
+<div class="InnerWrapper" style="margin-bottom: 20px">
+    @using (Html.BeginForm("CreateNew", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label>Username: </label>
+        @Html.TextBoxFor(x => x.Username);
+        <br />
+
+        <label>Password: </label>
+        @Html.TextBoxFor(k => k.Password);
+        <br />
+
+        <label>Nickname </label>
+        @Html.TextBoxFor(k => k.Nickname);
+        <br />
+
+        <label>Type: </label>
+        @Html.DropDownListFor(k => k.Type, new SelectList(new List<Tuple<int, string>>()
+            {
+                new Tuple<int, string>(0, "User"),
+                new Tuple<int, string>(1, "Administrator"),
+                new Tuple<int, string>(2, "Subscriber")
+            }, "Item1", "Item2"));
+        <br />
+
+
+        <button>Create</button>
+    }
+</div>

@@ -1,0 +1,42 @@
+﻿@model int
+@{
+    ViewData["Title"] = "ResetPW";
+}
+
+
+<div class="InnerWrapper" style="text-align: center">
+    <h2>Reseting password...</h2>
+    <br />
+    <h4>Input new password:</h4>
+    <input id="RPI" type="text" style="display: block; width: 200px; margin: auto; padding: 10px" />
+    <br />
+    <br />
+    <button onclick="ResetPW()">Reset password</button>
+</div>
+
+
+<script>
+    function ResetPW() {
+        var newPW = $("#RPI").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/User/AResetPW",
+            data: {
+                userID: @Model,
+                pw: newPW
+            },
+            success: function (data) {
+                if (data == "success") {
+                    window.location.href = "/Home/Success?msg=" + data;
+                }
+                else {
+                    window.localStorage.href = "/Home/Error?msg=Error occured while reseting password!";
+                }
+            },
+            error: function() {
+                window.localStorage.href = "/Home/Error?msg=Error occured while reseting password!";
+            }
+        });
+    }
+</script>

@@ -1,0 +1,106 @@
+﻿@model NewsModel
+@{
+    ViewData["Title"] = "NewNews";
+}
+
+<style>
+    #News_Title, #News_Text {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #e1000f;
+    }
+
+    #News_Text {
+        height: 200px;
+    }
+
+    #Media {
+        display: none;
+    }
+
+    #UploadMediaButton {
+        background-color: white;
+        color: #e1000f;
+        padding: 50px 10px 50px 10px;
+        border: 2px solid #e1000f;
+        font-family: Raleway-Bold;
+        border-radius: 5px;
+    }
+
+        #UploadMediaButton:hover {
+            cursor: pointer;
+            background-color: #e1000f;
+            color: white;
+        }
+
+    #WriteNews {
+        background-color: #e1000f;
+        padding: 5px 15px 5px 15px;
+        color: white;
+        font-family: Raleway-Bold;
+        border-radius: 5px;
+        border: none;
+        border: 1px solid white;
+    }
+
+        #WriteNews:hover {
+            color: #e1000f;
+            background-color: white;
+            border: 1px solid #e1000f;
+        }
+</style>
+
+<div class="InnerWrapper" style="font-family: Raleway-Regular; padding-bottom: 20px">
+    @using (Html.BeginForm("AUploadNews", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <button type="button" onclick="$('#HideTBtn').show(); $(this).hide(); $('#UploadThumbnailButton').show(); $('#News_Thumbnail').val('/images/ECHO_logo_vector.svg');" id="UseTBtn">Use thumbnail</button>
+        <button type="button" hidden onclick="$('#UseTBtn').show(); $(this).hide(); $('#UploadThumbnailButton').hide(); $('#News_Thumbnail').val('');" id="HideTBtn">Hide thumbnail</button>
+        <img hidden style="width: 100%" id="UploadThumbnailButton" src="/images/ECHO_logo_vector.svg" onclick="OpenGallery()" />
+        @Html.HiddenFor(t => t.News.Thumbnail);
+
+        <br />
+        <br />
+        <br />
+
+        @Html.TextBoxFor(t => t.News.Title, new { placeholder = "TITLE" });
+        <br />
+        <br />
+        @Html.TextAreaFor(t => t.News.Text, new { placeholder = "Write something" });
+        <br />
+        <br />
+        <label for="Media" id="UploadMediaButton">Upload your media here!</label>
+        @Html.EditorFor(t => t.Media);
+        <br />
+        <br />
+        <button id="WriteNews">Post!</button>
+    }
+</div>
+<partial name="pGallery" model="new Media()">
+
+<script>
+    function OpenGallery() {
+        $("#Gallery").show();
+    }
+
+    $(function () {
+        $("#Media").change(function () {
+            var v = $("#Media").val().split("\\");
+
+            if (v.length < 1) {
+                $("#UploadMediaButton").html("Upload your media here!");
+            }
+            else {
+                $("#UploadMediaButton").html(v[v.length - 1]);
+            }
+        });
+
+        $(document).on('click', ".GalleryItem", function () {
+            var link = $(this).attr("src");
+            $("#UploadThumbnailButton").attr("src", link);
+            $("#News_Thumbnail").val(link);
+            $("#Gallery").hide();
+        });
+        
+    })
+</script>

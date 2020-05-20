@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewData["Title"] = "TOP500Form";
+}
+
+<style>
+    #Top500Form input, #Top500Form select {
+        margin: 5px;
+    }
+
+    #Top500Form textarea {
+        width: 100%;
+    }
+</style>
+<div class="InnerWrapper" id="Top500Form">
+    <h2 style="text-align: center">
+        Angaben: „Salzburg’s Top 500 Unternehmen“
+    </h2>
+    <br />
+    <p>
+        Am Ende des Datenblattes finden Sie noch einige allgemeine Fragen. Bitte beantworten Sie diese nach
+        Möglichkeit, wir möchten daraus Informationen für die Wirtschaftsgeschichten erhalten. Selbstverständlich
+        werden die Antworten auf die konjunkturbezogenen Fragen anonym verwendet. Bitte geben Sie uns auch
+        ein paar “Highlights” oder besonders relevante Stichworte über Ihr Unternehmen bekannt, aus den
+        interessantesten Vorschlägen werden wir die Wirtschafts-Geschichten der kommenden Monate bzw. des
+        Sonderteiles zu den Top 500 auswählen
+    </p>
+    <br />
+    <h3>
+        Ihre Angaben / Aktualisierungen
+        (Bilanzjahr 2018)
+    </h3>
+    <br />
+    <br />
+    <label>Firmenname: </label><input id="1" type="text" /><br />
+    <label>Strasse: </label><input id="2" type="text" /><br />
+    <label>Hausnr: </label><input id="3" type="text" /><br />
+    <label>PLZ: </label><input id="4" type="text" /><br />
+    <label>Ort: </label><input id="5" type="text" /><br />
+    <label>Tel.Nr: </label><input id="6" type="text" /><br />
+    <label>Fax.Nr: </label><input id ="7"type="text" /><br />
+    <label>Branchentext 1: </label><input id="8" type="text" /><br />
+    <label>Umsatz 2018: </label><input id="9" type="text" /><br />
+    <label>kons. Umsatz: </label><input id="10" type="text" /><br />
+    <label>Gruppenumsatz: </label><input id="11" type="text" /><br />
+    <label>Eigentümer: </label><input id="12" type="text" /><br />
+    <label>Exportanteil in %: </label><input id="13" type="text" /><br />
+    <label>Beschäftigte (Schnitt 18): </label><input id="14" type="text" /><br />
+    <label>Vorstand / GF: </label><input id="15" type="text" /><br />
+    <label>Titel: </label><input id="16" type="text" /><br />
+    <label>Anrede: </label><input id="17" type="text" /><br />
+    <label>Vorname: </label><input id="18" type="text" /><br />
+    <label>Familienname: </label><input id="19" type="text" /><br />
+    <label>Vorstände - Eigentümer: </label><input id="20" type="text" /><br />
+    <label>Leitung Personal Anrede: </label><input id="21" type="text" /><br />
+    <label>Titel: </label><input id="22" type="text" /><br />
+    <label>Vorname: </label><input id="23" type="text" /><br />
+    <label>Familienname: </label><input id="24" type="text" /><br />
+    <label>Pressesprecher: </label><input id="25" type="text" /><br />
+    <label>Marketingleiter: </label><input id="26" type="text" /><br /><br />
+    <label>ANMERKUNGEN zu den obenstehenden Daten: </label><input id="27" type="text" /><br />
+    <label>Meilensteine, Neuerungen, wichtige Ereignisse oder Entwicklungen in Ihrem Unternehmen: </label><input id="28" type="text" /><br />
+    <label>Wie wird die Entwicklung in Ihrem Unternehmen im heurigen Jahr sein? </label>
+    <select id="29">
+        <option>besser als 2018</option>
+        <option>gleich wie 2018</option>
+        <option>schlechter als 2018</option>
+    </select><br />
+    <label>Haben Sie im heurigen Jahr Mitarbeiter abgebaut, ist der Personalstand gestiegen oder ist er gleichgeblieben? </label>
+    <select id="30">
+        <option>unser Unternehmen hat Mitarbeiter abgebaut</option>
+        <option>der Personalstand ist in unserem Unternehmen gleich geblieben</option>
+        <option>der Personalstand ist in unserem Unternehmen gestiegen</option>
+    </select><br />
+    <label>Planen Sie in den nächsten 12 Monaten: </label>
+    <select id="31">
+        <option>eine Personalaufstockung</option>
+        <option>Ihren Personalstand gleichbleibend zu lassen</option>
+        <option>einen Personalabbau</option>
+    </select>
+    <br />
+    <label>Bilden Sie Lehrlinge aus?</label>
+    <select id="32">
+        <option>ja</option>
+        <option>nein</option>
+    </select>
+    <br />
+    <label>Wieviel Lehrlinge pro Jahr?</label>
+    <input id="33" type="text" />
+    <br />
+
+    <label>In welchen Berufen werden Lehrlinge in Ihrem Unternehmen ausgebildet?</label><br />
+    <textarea id="34"></textarea>
+    <br />
+    <br />
+
+    <label>Bitte nennen Sie uns das Gründungsjahr Ihres Unternehmens?</label><br />
+    <textarea id="35"></textarea>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <button onclick="Submit()" style="display: block; margin: auto">EINREICHEN</button>
+    <br />
+    <br />
+    <br />
+    <h3 style="text-align: center">Wir bedanken uns für Ihre Mitarbeit und stehen Ihnen für weitere Fragen jederzeit zur Verfügung.</h3>
+
+</div>
+
+
+<script>
+    function Submit() {
+        $.ajax({
+            type: "POST",
+            url: "/Home/ASubmitTop500Form",
+            data: {
+                d1: $("#1").val(),
+                d2: $("#2").val(),
+                d3: $("#3").val(),
+                d4: $("#4").val(),
+                d5: $("#5").val(),
+                d6: $("#6").val(),
+                d7: $("#7").val(),
+                d8: $("#8").val(),
+                d9: $("#9").val(),
+                d10: $("#10").val(),
+                d11: $("#11").val(),
+                d12: $("#12").val(),
+                d13: $("#13").val(),
+                d14: $("#14").val(),
+                d15: $("#15").val(),
+                d16: $("#16").val(),
+                d17: $("#17").val(),
+                d18: $("#18").val(),
+                d19: $("#19").val(),
+                d20: $("#20").val(),
+                d21: $("#21").val(),
+                d22: $("#22").val(),
+                d23: $("#23").val(),
+                d24: $("#24").val(),
+                d25: $("#25").val(),
+                d26: $("#26").val(),
+                d27: $("#27").val(),
+                d28: $("#28").val(),
+                d29: $("#29").val(),
+                d30: $("#30").val(),
+                d31: $("#31").val(),
+                d32: $("#32").val(),
+                d33: $("#33").val(),
+                d34: $("#34").val(),
+                d35: $("#35").val()
+            },
+            success: function () {
+                window.location.href = "/Home/Success?msg=Sie haben sich erfolgreich beworben. Wir werden uns umgehend bei Ihnen melden!";
+            },
+            error: function () {
+                window.location.href = "/Home/Error?msg=Error!";
+            }
+        });
+    }
+</script>

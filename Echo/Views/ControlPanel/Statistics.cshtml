@@ -1,0 +1,8 @@
+﻿@inject IHostingEnvironment HostingEnvironment;
+@{
+    ViewData["Title"] = "Statistics";
+}
+
+<div class="InnerWrapper">
+    <h3>Total visits to website: @Statistics.GetNumberOfVisits(HostingEnvironment.WebRootPath)</h3>
+</div>

@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewData["Title"] = "pHeaderMobile";
+}
+
+<style>
+    #pHeaderMobile {
+        position: relative;
+        width: 100%;
+        margin: 0;
+        left: 0;
+        top: 0;
+        font-family: Raleway-Bold !important;
+        color: white;
+        z-index: 950;
+    }
+        #pHeaderMobile .HiddenPart {
+            position: absolute;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+            #pHeaderMobile .HiddenPart button {
+                background-color: transparent;
+                width: 100%;
+                border: none;
+                text-align: left;
+                font-size: x-large;
+                padding: 5px 0px 5px 25px;
+            }
+        #pHeaderMobile .HiddenPart button:hover {
+            color: darkred;
+        }
+        #pHeaderMobile .VisiblePart  {
+            width: 100%;
+            background-color: #e1000f;
+            height: 10vh;
+            max-height: 10vh;
+        }
+    #OpenMobileMenu:hover {
+        cursor: pointer;
+
+    }
+
+</style>
+
+<div id="pHeaderMobile">
+    <div class="VisiblePart">
+        <img src="~/images/hamburger.png" style="font-size: 7vh; max-height: 8vh; position: absolute; top: 5px; left: 1vw;" id="OpenMobileMenu">
+        <img onclick="window.location.href='/'" style="position: absolute; transform: translateX(-50%); margin-top: 1.5vh; margin-left: 50%; max-height: 7vh; left: 0; top: 0;" src="~/images/ECHO_logo_vector.svg" />
+        <img id="Login" onclick="window.location.href='/ControlPanel'" src="~/images/Login.png" style="position: absolute; max-height: 7vh; right: 1vw; top: 0; margin-top: 1.5vh" />
+    </div>
+    <div class="HiddenPart" hidden>
+        <div style="position: fixed; text-align: center; width: 20vw; height: 12vh; top: 0; right: 0; background-color: #e1000f;">
+            <button onclick="CloseMobileMenu()" style="text-align: center; padding: 0; height: 100%">X</button>
+        </div>
+        <div style="width: 80vw; position: fixed; overflow-x: hidden; overflow-y: auto; background-color: #e1000f; height: 100%; box-shadow: 0 0 15px 5px black">
+            <br />
+            <br />
+            <button onclick="window.location.href='/'">HOME<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/ThePublisher'">DER VERLAG<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/Products'">PRODUKTE<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/Top500'">TOP 500<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/News'">NEWS<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/Archieve'">ARCHIV<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/MediaData'">MEDIADATEN<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/Contact'">KONTAKT<span class="outHelper">&nbsp;</span></button>
+            <button onclick="window.location.href='/Home/Subscription'">ABO<span class="outHelper">&nbsp;</span></button>
+            <br />
+            <br />
+            <div style="width: 80vw; position: fixed; bottom: 0; background-color: #e1000f">
+                <img src="~/images/ECHO_logo_vector.svg" style="width: 50%; margin-left: 15px; margin-bottom: 5px" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function CloseMobileMenu() {
+        $("#pHeaderMobile .HiddenPart").hide();
+    }
+
+    $(function () {
+        $("#OpenMobileMenu").click(function () {
+            $("#pHeaderMobile .HiddenPart").show();
+        });
+    });
+</script>

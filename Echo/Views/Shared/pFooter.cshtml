@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "pFooter";
+}
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+
+<style>
+    .siteMap a {
+        color: inherit;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .siteMap a:hover {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+<div class="OutterWrapper" id="FooterWrapper">
+    <div id="NewsLetter" style="width: 100%; position: relative; height: 100px; background-color: #d5d5d5">
+        <div class="InnerWrapper" style="position: relative; height: 100%">
+            <h2 style="font-size: 20px; font-family: Raleway-Bold; top: 50%; margin: 0; margin-left: 20px; color: #6a6a6a; position: absolute; transform: translateY(-50%)">MELDEN SIE SICH FÜR UNSEREN NEWSLETTER AN</h2>
+
+            <button id="NewsletterSubscribeBtn" style="font-size: 14px; z-index: 10; position: relative; width: 170px; height: 50px; float: right; margin-top: 25px; font-family: Raleway-Bold; color: white; background-color: #de0d0d; border: none; border-radius: 5px">ABONNIEREN</button>
+            <input id="NewsLetterSubscribeInput" type="text" placeholder="Geben Sie Ihre E-Mail ein" style="font-family: Raleway-Regular; width: 400px; border-radius: 5px; border: none; margin-right: -20px; padding-right: 40px; font-size: 14px; height: 50px; float: right; margin-top: 25px; color: #71737a; padding-left: 27px" />
+        </div>
+    </div>
+    <div class="InnerWrapper"  style="font-family: Montserrat-Regular">
+        <div class="row">
+                <div class="col-sm-3" style="padding: 30px">
+                    <br />
+                    <span style="font-family: Raleway-Bold; color: #2f3034; display: block">ECHO in Salzburg Verlags GmbH</span><br />
+                    
+                    <img src="~/images//ECHO_logo_vector.svg" style="width: 150px"/>
+                    <div style="color: #71737a; display: block; margin-top: 20px">
+
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <img style="width: 20px; float: left; margin-right: 5px" src="~/images/phone.png" />
+                            </div>
+                            <div class="col-sm-10">
+                                <p>
+                                    Telefon: +43 662 45 70 90<br />
+                                    <span>Fax: +43 662 45 70 90 20</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <img style="width: 20px; float: left; margin-right: 5px" src="~/images/mail.png" />
+                            </div>
+                            <div class="col-sm-10">
+                                <p>
+                                    Email: verwaltung@echosalzburg.at
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="padding: 10px">
+                </div>
+                <div class="col-sm-3 siteMap" style="padding: 10px; padding-left: 30px">
+                    <br />
+                    <p style="font-size: large; font-family: Raleway-Regular; font-weight: bolder; border-bottom: 1px solid lightgray;
+                        padding-bottom: 10px;">SITEMAP</p>
+                    <a style="font-family: Raleway-Regular" href="/">Home</a>
+                    <a style="font-family: Raleway-Regular" href="/Home/ThePublisher">Der Verlag</a>
+                    <a style="font-family: Raleway-Regular" href="/Home/Products">Produkte</a>
+                    <a style="font-family: Raleway-Regular" href="/Home/MediaData">Mediadaten</a>
+                    <a style="font-family: Raleway-Regular" href="/Home/Contact">Kontakt</a>
+                    <a style="font-family: Raleway-Regular" href="/Home/Subscription">Abonnieren</a>
+                </div>
+                <div class="col-sm-3 siteMap" style="padding: 10px; padding-left: 30px">
+                    <br />
+                    <p style="font-size: large; font-family: Raleway-Regular; font-weight: bolder; border-bottom: 1px solid lightgray;
+                        padding-bottom: 10px;">ARCHIV</p>
+                    @foreach(AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+                    {
+                        <a style="font-family: Raleway-Regular" href="/Home/Archieve?grupaid=@g.GrupaID">@g.Naziv</a>
+                    }
+                </div>
+            </div>
+        <div style="width: 100%; text-align: center; border-top: 1px solid lightgray; padding-top: 20px; padding-bottom: 10px">
+            <p>
+                <span style="color: #71737a">Copyright &#169; 2019</span>
+                <span>ECHO Salzburg.</span>
+                <span style="color: #71737a">All rights reserved </span>
+                |
+                <a href="/Home/Agb" style="color: red;">AGB </a>
+                |
+                <a href="/Home/Contact" style="color: red;">Impressum</a>
+            </p>
+            <p>Site by: <a href="http://abba.expert/" style="color: red">ABBA Expert</a></p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $("#NewsletterSubscribeBtn").click(function () {
+            window.location.href = "/Newsletter/Subscribe?mail=" + $("#NewsLetterSubscribeInput").val();
+        });
+    });
+</script>

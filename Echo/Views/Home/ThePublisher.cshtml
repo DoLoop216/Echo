@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewData["Title"] = "The Publisher";
+
+    bool admin = false;
+
+    if (Networking.isAdmin(Context.Request))
+    {
+        admin = true;
+    }
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/Home/ThePublisher.css" />
+
+<script>
+    $(function () {
+        $("#MenuThePublisher").addClass("active");
+    });
+</script>
+
+@if (admin)
+{
+    <style>
+        .editable:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+    <div class="InnerWrapper">
+        <div id="ThePublisher">
+            <partial name="pTop500" />
+
+            <br />
+            <div class="col-lg-9">
+                <span class="editable Title" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=1'">@Html.Raw(AR.ARNews.NonFixedText.Get(1).Text)</span>
+                <br />
+                <p class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=2'">@Html.Raw(AR.ARNews.NonFixedText.Get(2).Text)</p>
+                <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=3'">
+                    @Html.Raw(AR.ARNews.NonFixedText.Get(3).Text)
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <partial name="pShortlist" />
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="InnerWrapper">
+        <div id="ThePublisher">
+            <partial name="pTop500" />
+
+            <br />
+            <div class="col-lg-9">
+                <span class="Title">@Html.Raw(AR.ARNews.NonFixedText.Get(1).Text)</span>
+                <br />
+                <p>@Html.Raw(AR.ARNews.NonFixedText.Get(2).Text)</p>
+                <div class="editable">
+                    @Html.Raw(AR.ARNews.NonFixedText.Get(3).Text)
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <partial name="pShortlist" />
+            </div>
+        </div>
+    </div>
+}
+

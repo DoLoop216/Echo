@@ -1,0 +1,19 @@
+﻿@model AR.ARNews.News
+<div class="newsContainer">
+    @if (Networking.isAdmin(Context.Request))
+    {
+        <text>
+            <a style="display: block; text-align: right; color: red; font-size: large" onclick="_wait(); window.location.href='/ControlPanel/ADeleteNews?ID=@Model.NewsID'">Remove</a>
+        </text>
+    }
+    @if (!string.IsNullOrWhiteSpace(Model.Thumbnail) && Model.Thumbnail.Length > 1)
+    {
+        string tn = Model.Thumbnail.Replace('\\', '/');
+                <div class="newsContainerImage" style="background-image: url(@tn)" ></div>
+    }
+    <h2 class="newsContainerTitle">@Model.Title</h2>
+    <h4>@Model.Text</h4>
+    <video style="width: 100%" controls>
+        <source src="@Model.Media.Replace('\\', '/')" type="video/mp4" />
+    </video>
+</div>

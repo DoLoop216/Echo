@@ -1,0 +1,70 @@
+﻿@model List<ClanakModel>
+@{
+    ViewData["Title"] = "Stories";
+}
+
+<style>
+    #StoriesPanel {
+        position: relative;
+        width: 100%;
+    }
+
+    #StoriesPanel table {
+        width: 100%;
+    }
+
+        #StoriesPanel th {
+            background-color: #8a6d3b;
+            color: white;
+            padding-left: 5px;
+        }
+
+        #StoriesPanel td {
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-left: 5px;
+
+            border-bottom: 1px solid;
+        }
+
+    .story:hover {
+        background-color: #d9edf7;
+        cursor: pointer;
+    }
+
+    #StoriesPanel button {
+        border: none;
+        background-color: #8a6d3b;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding: 5px 10px 5px 10px;
+        color: white;
+        border-radius: 15px 0px 15px 0px;
+    }
+        #StoriesPanel button:hover {
+            background-color: #efbe6b;
+        }
+</style>
+
+
+<div class="InnerWrapper">
+    <div id="StoriesPanel">
+        <br />
+        <button onclick="window.location.href='/Story/New'">Write new story</button>
+        <table>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Publisher</th>
+            </tr>
+            @foreach (ClanakModel c in Model)
+            {
+                <tr class="story" onclick="window.location.href='/Story/Edit?ID=@c.ClanakID'">
+                    <td>@c.Naslov</td>
+                    <td>@c.Datum.ToString("dd/MM/yyyy")</td>
+                    <td>@AR.ARNews.User.GetDisplayName(@c.KorisnikID)</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

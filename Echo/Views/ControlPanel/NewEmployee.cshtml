@@ -1,0 +1,61 @@
+﻿@model AR.ARNews.Employee
+@{
+    ViewData["Title"] = "NewEmployee";
+}
+
+<style>
+    .thumb {
+        width: 200px;
+        height: 300px;
+        border: 2px solid red;
+        border-radius: 5px;
+        text-align: center;
+        background-size: cover;
+    }
+    
+    .thumb:hover {
+        cursor: pointer;
+        border-color: orange;
+    }
+
+</style>
+
+<div class="InnerWrapper">
+    <h2>New Employee</h2>
+
+    @using (Html.BeginForm("ANewEmployee", "ControlPanel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label for="Image" class="thumb" onclick="OpenGallery()">Select image</label>
+        @Html.HiddenFor(e => e.Image)<br />
+
+        <label>First:</label>@Html.EditorFor(e => e.FirstName)<br />
+
+        <label>Second:</label>@Html.EditorFor(e => e.SecondName)<br />
+
+        <label>Title:</label>@Html.EditorFor(e => e.Title)<br />
+
+        <label>Telephone:</label>@Html.EditorFor(e => e.Telephone)<br />
+
+        <label>Mail:</label>@Html.EditorFor(e => e.Mail)<br />
+
+        <button>Submit</button>
+    }
+</div>
+
+<partial name="pGallery" model="new Media()">
+
+<script>
+    function OpenGallery() {
+        $("#Gallery").show();
+    }
+
+    $(function () {
+        $(".GalleryItem").click(function () {
+            var link = $(this).attr("src").replace(/\\/g, "/");
+            $(".thumb").css("background-image", "url('" + link + "')");
+            $(".thumb").html("");
+            $("#Image").val(link);
+            $("#Gallery").hide();
+        });
+    });
+</script>

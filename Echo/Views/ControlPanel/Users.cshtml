@@ -1,0 +1,83 @@
+﻿@model List<AR.ARNews.User>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<style>
+    #UsersPanel {
+        width: 100%;
+        position: relative;
+    }
+
+    #UsersPanel table {
+        width: 100%;
+    }
+
+    #UsersPanel td, #UsersPanel th {
+        padding-left: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    #UsersPanel th {
+        background-color: red;
+    }
+
+    .user:hover {
+        background-color: #d1b0f5 !important;
+        cursor: pointer;
+    }
+
+        #UsersPanel .administrator {
+            background-color: gold;
+        }
+
+    #CreateUser {
+        border: none;
+        background-color: #8a6d3b;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding: 5px 10px 5px 10px;
+        color: white;
+        border-radius: 15px 0px 15px 0px;
+    }
+
+        #CreateUser:hover {
+            background-color: #efbe6b;
+        }
+</style>
+<div class="InnerWrapper">
+    <div id="UsersPanel">
+        <h2>All users</h2>
+        <button id="CreateUser" onclick="window.location.href='/User/New'">Create user</button>
+        <table>
+            <tr style="background-color: red; color: white">
+                <th>ID</th>
+                <th>Username</th>
+                <th>Nickname</th>
+                <th>Type</th>
+            </tr>
+            @foreach (AR.ARNews.User u in Model)
+            {
+                if (u.Type == AR.ARNews.UserType.Administrator)
+                {
+                    <tr class="user administrator" onclick="window.location.href='/User?ID=@u.UserID'">
+                        <td>@u.UserID.ToString()</td>
+                        <td>@u.Username</td>
+                        <td>@u.Nickname</td>
+                        <td>@u.Type.ToString()</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr class="user" onclick="window.location.href='/User?ID=@u.UserID'">
+                        <td>@u.UserID.ToString()</td>
+                        <td>@u.Username</td>
+                        <td>@u.Nickname</td>
+                        <td>@u.Type.ToString()</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>

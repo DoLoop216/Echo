@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Manage groups";
+    List<AR.ARNews.Grupa> groups = AR.ARNews.Grupa.List();
+}
+
+
+
+<div class="InnerWrapper">
+    @foreach (AR.ARNews.Grupa g in groups)
+    {
+        <partial name="~/Views/ControlPanel/_GroupEdit.cshtml" model="g" />
+    }
+
+    <br /><br />
+    <label>New group name: </label>
+    <input type="text" id="NewGroupInput" /><button onclick="CreateNew()">Create new</button>
+</div>
+
+<script>
+
+    function CreateNew() {
+        var v = $("#NewGroupInput").val();
+
+        if (v != null && v.length > 0) {
+            window.location.href = "/ControlPanel/ACreateNewGroup?Name=" + v;
+        } else {
+            alert("Invalid name value!");
+        }
+    }
+</script>

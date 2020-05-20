@@ -1,0 +1,46 @@
+﻿@inject IHostingEnvironment HostingEnvironment;
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Echo</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css?id=2" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+
+    @if (Context.Request.Cookies["Visited"] == null)
+    {
+        Microsoft.AspNetCore.Http.CookieOptions opt = new Microsoft.AspNetCore.Http.CookieOptions();
+        opt.Expires = DateTime.Now.AddHours(1);
+
+        Context.Response.Cookies.Append("visited", "1", opt);
+
+        Program.AddVisitor(HostingEnvironment.WebRootPath);
+    }
+
+    @if (string.IsNullOrWhiteSpace(Context.Request.Cookies["cook"]))
+    {
+        <partial name="pCookies" />
+        Context.Response.Cookies.Append("cook", "1");
+    }
+
+    <partial name="pHeader" />
+    <partial name="pHeaderMobile" />
+
+    <div id="LayoutContentWrapper">
+        @RenderBody()
+    </div>
+    <br />
+    <br />
+    <partial name="pFooter" />
+    <partial name="_Wait" />
+</body>
+
+</html>

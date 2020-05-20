@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Employees";
+    List<AR.ARNews.Employee> emps = AR.ARNews.Employee.List();
+    emps.Sort((x, y) => x.DisplayIndex.CompareTo(y.DisplayIndex));
+}
+
+<style>
+    .emp {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid gray;
+    }
+
+    button {
+        background-color: red;
+        border: none;
+        border-radius: 5px;
+        border: 2px solid white;
+        color: white;
+    }
+
+    button:hover {
+        background-color: white;
+        border-color: red;
+        cursor: pointer;
+        color: red;
+    }
+</style>
+<div class="InnerWrapper">
+    <h2>Employees</h2>
+
+    @foreach(AR.ARNews.Employee e in emps)
+    {
+        <div class="row emp">
+            <div class="col-md-4">
+                <img src="@e.Image" style="width: 100%" />
+            </div>
+            <div class="col-md-8">
+                <button onclick="window.location.href='/ControlPanel/ARemoveEmployee?ID=@e.ID'">Remove employee</button>
+                <button onclick="window.location.href='/ControlPanel/EditEmployee?ID=@e.ID'">Edit</button>
+                <h3>[@e.DisplayIndex] @e.FirstName @e.SecondName</h3>
+                <h4>@e.Title</h4>
+                <br />
+                <h4>@e.Telephone</h4>
+                <br />
+                <h4>@e.Mail</h4>
+            </div>
+        </div>
+    }
+    <button onclick="window.location.href='/ControlPanel/NewEmployee'">Add new</button>
+</div>

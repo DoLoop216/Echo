@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewData["Title"] = "Agb";
+}
+
+
+<div class="InnerWrapper">
+    @if (Networking.isAdmin(Context.Request))
+    {
+        <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=20'">@Html.Raw(AR.ARNews.NonFixedText.Get(20).Text)</div>
+    }
+    else
+    {
+        <div>@Html.Raw(AR.ARNews.NonFixedText.Get(20).Text)</div>
+    }
+</div>

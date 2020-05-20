@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Circural Message";
+}
+
+<style>
+    .asfsafas h2:hover, .asfsafas p:hover, .asfsafas img:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="InnerWrapper" style="font-family: Raleway">
+    <button onclick="AddNews()">Add row</button>
+    <div class="SampleContainer">
+        <div style="width: 100%; text-align: center">
+            <img src="http://echosalzburg.at/images/EchoLogo.png" style="width: 100%; max-width: 500px">
+        </div>
+        <br />
+    </div>
+
+    <button onclick="Send()">Send</button>
+</div>
+
+<partial name="pGallery" />
+
+<script>
+    var sCont;
+    var currImg;
+
+    $(function () {
+        sCont = $(".SampleContainer");
+        eCont = $(".EditContainer");
+        AddNews();
+
+        $("body").on("click", ".asfsafas h2", function () {
+            var val = prompt("Enter title value");
+
+            $(this).html(val);
+        });
+
+        $("body").on("click", ".asfsafas p", function () {
+            var val = prompt("Enter text value");
+
+            $(this).html(val);
+        });
+
+        $("body").on("click", ".asfsafas img", function () {
+            currImg = $(this);
+            $("#Gallery").show();
+        });
+
+        $("body").on("click", ".GalleryItem", function () {
+            var v = $(this).attr("src");
+
+            changeImage(v);
+
+            $("#Gallery").hide();
+        });
+
+        $("body").on("click", ".asfsafas a", function () {
+            return false;
+        });
+        $("body").on("click", ".asfsafas a", function () {
+            var val = prompt("Enter redirect link with like this: http://www.echosalzburg.at");
+
+            $(this).attr("href", val);
+        });
+    });
+
+    function changeImage(href) {
+        $(currImg).attr("src", "http://www.echosalzburg.at" + href);
+    }
+
+    function AddNews() {
+        $(sCont).append(`
+            <div class="asfsafas" style="max-width: 500px; margin: auto; margin-top: 10px; padding-left: 5px; padding-right: 5px; padding-top: 1px; background-color: #ececec; border-bottom: 5px solid #e1000f; border-top: 5px solid #e1000f; text-align: center; padding-bottom: 20px">
+	            <h2 style="color: black; margin-top: 20px; margin-bottom: 25px; font-weight: bolder">Wachstumsmarkt CEE. Profitieren Sie vom Know-how der Unternehmerbank</h2>
+	            <img style="width: 100%" title="EchoSalzburg" alt="EchoSalzburg" src="http://www.echosalzburg.at/images/01-Bank-Austria-05-19.jpg">
+	            <br />
+	            <br />
+	            <p style="color: black; margin-top: 10px">Die Länder Zentral- und Osteuropas sind ein wichtiger Wachstumsmarkt für österreichische Unternehmen. Gerade in wirtschaftlich sehr fordernden Zeiten mit einer nur schleppenden Konjunktur in Deutschland ist eine enge Beziehung mit der wachstumsstärkeren CEE-Region von Vorteil. Einen Ausblick dazu gibt Christian Profanter, Landesdirektor Firmenkunden Bank Austria Salzburg.</p>
+	            <br />
+	            <br />
+	            <a href="http://www.echosalzburg.at/" style="background-color: #e1000f; padding: 5px 15px 5px 15px; border-radius: 5px; color: white; font-weight: bolder" target="_blank" rel="noreferrer">Read more</a>
+            </div>`);
+    }
+
+    function Send() {
+        _wait();
+        setTimeout(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Newsletter/ASendNewsletter",
+                async: true,
+                data: {
+                    "Text": $(sCont).html()
+                },
+                success: function (data) {
+                    alert(data);
+                    window.location.href = "/ControlPanel";
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        }, 1000);
+    }
+</script>

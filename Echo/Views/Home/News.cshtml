@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "News";
+    List<AR.ARNews.News> news = AR.ARNews.News.List();
+
+    bool admin = false;
+
+    if (Networking.isAdmin(Context.Request))
+    {
+        admin = true;
+    }
+
+    if (!admin)
+    {
+        news = news.Where(x => x.Visible == true).ToList();
+    }
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0));
+    int DisplayNSmallAds = 2;
+}
+
+
+<script>
+    $(function () {
+        $("#MenuNews").addClass("active");
+    });
+</script>
+<link rel="stylesheet" type="text/css" href="~/css/News.css" />
+<div class="InnerWrapper" id="Newss">
+    <div class="row">
+        <div class="col-md-9">
+            @if (admin)
+            {
+                <button onclick="window.location.href='/ControlPanel/NewNews'">&nbsp;+&nbsp;&nbsp;Add new</button>
+            }
+
+            @foreach (AR.ARNews.News n in news)
+            {
+                string isHiddenClass = "";
+
+                if (n.Visible == false)
+                {
+                    isHiddenClass = "thisIsNotVisible";
+                }
+                if (n.MediaType == AR.ARNews.News.NewsMediaType.Null)
+                {
+                    <text>
+                        <partial name="/Views/Home/_News_Item_Text.cshtml" model="n">
+                    </text>
+                }
+                else if (n.MediaType == AR.ARNews.News.NewsMediaType.Video)
+                {
+                    <text>
+                        <partial name="/Views/Home/_News_Item_Video.cshtml" model="n">
+                    </text>
+                }
+                else if (n.MediaType == AR.ARNews.News.NewsMediaType.Media)
+                {
+                    <text>
+                        <partial name="/Views/Home/_News_Item_File.cshtml" model="n">
+                    </text>
+                }
+            }
+</div>
+
+<div class="col-sm-3 HideOnMobile">
+    <hr style="border: 3px solid red; background-color: none; width: 40%; margin-left: 0" />
+    @{
+        SideBanners.Shuffle();
+        if (SideBanners != null && SideBanners.Count <= DisplayNSmallAds)
+        {
+            foreach (AR.ARNews.Banner b in SideBanners)
+            {
+                if (b.Position == 0)
+                {
+                    <div class="Banner" style="height: 250px">
+                        <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                    </div>
+                }
+                else
+                {
+                    <div class="Banner" style="height: 500px">
+                        <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                    </div>
+                }
+            }
+        }
+        else if (SideBanners != null)
+        {
+            int limit = 0;
+            foreach (AR.ARNews.Banner b in SideBanners)
+            {
+                if (b.Position == 0)
+                {
+                    <div class="Banner" style="height: 250px">
+                        <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                    </div>
+                }
+                else
+                {
+                    <div class="Banner" style="height: 500px">
+                        <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                    </div>
+                }
+                limit++;
+                if (limit >= DisplayNSmallAds)
+                {
+                    break;
+                }
+            }
+        }
+    }
+</div>
+</div>
+</div>

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "DBMails";
+    List<AR.ARNews.Mail> mails = AR.ARNews.Mail.List();
+}
+
+<style>
+    .m:hover {
+        color: red;
+        cursor: pointer;
+    }
+</style>
+<div class="InnerWrapper" style="font-family: Raleway">
+    <br />
+    <div style="background-color: lightgray; padding: 5px; display: inline-block; width: 100%">
+        <h3>Add multiple mails (separate them with ";;")</h3>
+        <input type="text" style="width: 100%; padding: 5px" id="multipleMailsInput"/>
+        <button style="float: right; margin: 5px" onclick="AddMultipleMails()">Add</button>
+    </div>
+    <br />
+    <br />
+    <h3>List of mails in database [@mails.Count()]</h3>
+    <h4 style="color: red">Click on mail to remove it!</h4>
+    <br />
+    <br />
+    @foreach (AR.ARNews.Mail m in mails)
+    {
+        <label class="m" onclick="RemoveFromDB(@m.ID)">@m.Value</label><br />
+    }
+</div>
+
+<script>
+    function RemoveFromDB(id) {
+        if (confirm("Are you sure you want to remove selected mail?")) {
+            window.location.href = "/ControlPanel/ARemoveMail?ID=" + id;
+        }
+    }
+
+    function AddMultipleMails() {
+        var val = $("#multipleMailsInput").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/ControlPanel/AAddMultipleMails",
+            data: {
+                mails: val
+            },
+            dataType: "text",
+            success: function (dat) {
+                alert(dat);
+            }
+        });
+    }
+</script>

@@ -1,0 +1,56 @@
+﻿@model AR.ARNews.User
+@{
+    ViewData["Title"] = "Admin";
+}
+
+<style>
+    #AdminPanel {
+        position: relative;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+        #AdminPanel button {
+            background-color: #31708f;
+            border: 1px solid;
+            color: white;
+            padding: 5px 20px 5px 20px;
+            width: 100%;
+        }
+
+            #AdminPanel button:hover {
+                background-color: #6fa1b9;
+            }
+
+</style>
+
+<div class="InnerWrapper">
+    <div id="AdminPanel">
+        <div class="row">
+            <div class="col-md-2">
+                
+                @if (true == false)
+                {
+                    <button onclick="_wait(); window.location.href='/User/List'">Users</button>
+                }
+                <br />
+                <br />
+                <button onclick="_wait(); window.location.href='/ControlPanel/Admin?modul=Stories'">Stories</button>
+                <button onclick="_wait(); window.location.href='/ControlPanel/Admin?modul=CM'">Newsletter</button>
+                <button onclick="_wait(); window.location.href='/ControlPanel/Employees'">Employees</button>
+                <br />
+                <br />
+                <button onclick="_wait(); window.location.href='/ControlPanel/Admin?modul=Statistics'">Statistics</button>
+                <button onclick="_wait(); window.location.href='/ControlPanel/Admin?modul=ad'">Manage ads</button>
+                <br />
+                <br />
+                <button onclick="_wait(); window.location.href='/ControlPanel/Admin?modul=Emails'">DB - Emails</button>
+                <button onclick="_wait(); window.location.href='/ControlPanel/GroupMng'">Story groups</button>
+                <br />
+                <br />
+                <button onclick="_wait(); window.location.href='/ControlPanel/Logoff'">Logout</button>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>

@@ -1,0 +1,349 @@
+﻿@model ArchiveFilter
+@{
+    ViewData["Title"] = "Home";
+    List<AR.ARNews.Clanak> clanci;
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0));
+    List<AR.ARNews.Banner> WideBanners = AR.ARNews.Banner.List(2);
+
+    int DisplayNSmallAds = 2;
+
+    bool admin = false;
+
+    if(Networking.isAdmin(Context.Request))
+    {
+        admin = true;
+    }
+    if (Model.OnlySalzburg)
+    {
+        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings() { GrupaID = 7 });
+    }
+    else
+    {
+        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings());
+    }
+
+    if(!admin)
+    {
+        clanci = clanci.Where(x => x.Status == AR.ARNews.ClanakStatus.Published).ToList();
+    }
+
+    int adAfterEveryNPosts = 4;
+    int adi = 0;
+    int inlineStories = 2;
+    int isi = 0;
+    int currC = 0;
+}
+
+<link rel="stylesheet" type="text/css" href="~/css/Home/Index.css?id=1" />
+
+<div class="InnerWrapper">
+    @if (Model.ShowFilter == false)
+    {
+        <text>
+            <script>
+                $(function () {
+                    $("#MenuHome").addClass("active");
+                });
+            </script>
+        </text>
+        if (Model.OnlySalzburg)
+        {
+            inlineStories = 1;
+            <text>
+                <h2 class="Title">
+                    SALZBURG
+                </h2>
+            </text>
+        }
+        else
+        {
+            <text>
+                <span class="Title">
+                    <span style="color: #e1000f">DAS</span> NEUESTE
+                </span>
+            </text>
+        }
+    }
+    else
+    {
+        <style>
+            .Clanak {
+                height: 220px;
+            }
+        </style>
+        <text>
+            <script>
+                $(function () {
+                    $("#MenuArchieve").addClass("active");
+                });
+            </script>
+        </text>
+        inlineStories = 4;
+        adAfterEveryNPosts = 12;
+        <text>
+            <h2 class="Title">
+                ARCHIV
+            </h2>
+        </text>
+    }
+
+    @if (admin)
+    {
+        <br />
+        <button onclick="window.location.href='/Story/New'">Add new</button>
+    }
+
+    @{
+        double wid = 0;
+        wid = ((100 - (inlineStories * 2)) / inlineStories) - 1;
+    }
+    <style>
+        .Clanak {
+            width: @wid%;
+        }
+    </style>
+
+    <div class="row">
+        @{
+            string ccc = "col-sm-9";
+
+            if (Model.ShowFilter)
+            {
+                ccc = "col-sm-12";
+            }
+        }
+        <div class="@ccc" style="padding: 10px">
+            @if (Model.ShowFilter == true)
+            {
+                <text>
+                    <style>
+                        #FilterArcSearch {
+                            color: #2f3034;
+                            width: 100%;
+                            border: 1px solid lightgray;
+                            border-radius: 3px;
+                            margin-top: 3px;
+                            margin-bottom: 3px;
+                            font-size: 13px;
+                            padding: 10px;
+                            padding-left: 15px;
+                            padding-right: 15px;
+                            font-family: Raleway-Regular;
+                        }
+
+                        #FilterArc {
+                            position: relative;
+                            display: inline-block;
+                            width: 100%;
+                            border: 2px solid #d5d5d5;
+                        }
+
+                        .Clanak .Title {
+                            font-size: 12px;
+                        }
+
+                        .FilterButton {
+                            border: none;
+                            background-color: transparent;
+                            color: black;
+                            font-family: Montserrat-regular;
+                        }
+
+                            .FilterButton:hover {
+                                text-decoration: underline;
+                                border: none;
+                            }
+
+                            .FilterButton.selected {
+                                text-decoration: underline;
+                                color: #e1000f;
+                            }
+                    </style>
+                    <input id="FilterArcSearch" type="text" placeholder="Search..." />
+                    <div id="FilterArc" style="margin-top: 20px; padding-top: 5px">
+                        <span style="position: absolute;top: -10px;left: 15px;background-color: white;padding: 1px 20px 0px 20px;font-family: Raleway-Bold;">Filter</span>
+                        <div id="FilterArcCategory" style="padding: 5px;">
+                            <span style="font-family: Raleway-Bold">Kategorie: </span>
+                            <button class="FilterButton selected" data-grupaid="-1" onclick="ChangeCategory(this)">Alles</button>
+                            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+                            {
+                                <button class="FilterButton" onclick="ChangeCategory(this)" data-grupaid="@g.GrupaID">@g.Naziv</button>
+                            }
+                        </div>
+                    </div>
+
+                    <script>
+                        var filterGroupSelected = @Html.Raw(Model.FilterGroupID);
+                        var displayedGroup = -1;
+
+                        function ChangeCategory(element) {
+                            $("#FilterArcCategory").children(".FilterButton").each(function () {
+                                if ($(this).attr("data-grupaid") != $(element).attr("data-grupaid")) {
+                                    $(this).removeClass("selected");
+                                } else {
+                                    $(this).addClass("selected");
+                                    filterGroupSelected = $(this).attr("data-grupaid");
+                                }
+                            });
+
+                            ApplyFilter();
+                        }
+
+
+                        function ApplyFilter() {
+                            displayedGroup = filterGroupSelected;
+                            $(".Clanak").each(function () {
+                                if ($(this).attr("GroupID") == filterGroupSelected || filterGroupSelected == -1) {
+                                    $(this).show();
+                                } else {
+                                    $(this).hide();
+                                }
+                            });
+                        }
+
+                        $(function () {
+                            $(".FilterButton[data-grupaid=@Html.Raw(Model.FilterGroupID)]").click();
+                            $("#FilterArcSearch").keyup(function () {
+                                var sv = $(this).val();
+                                $(".Clanak").each(function () {
+                                    if ($(this).attr("GroupID") == displayedGroup) {
+                                        if ($(this).children(".cccc").children(".Grupa").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0
+                                            || $(this).children(".cccc").children(".Datum").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0
+                                            || $(this).children(".cccc").children(".Title").html().toUpperCase().indexOf(sv.toUpperCase()) >= 0) {
+                                            $(this).show();
+                                        } else {
+                                            $(this).hide();
+                                        }
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+                </text>
+            }
+            <style>
+                .thisOneIsHidden {
+                    border: 2px solid red;
+                    padding: 5px;
+                }
+            </style>
+            @foreach (AR.ARNews.Clanak c in clanci)
+            {
+                currC++;
+                if (isi == 0)
+                {
+                    @Html.Raw("<div style='display: inline-block; width: 100%'>");
+                }
+                string thisoneishidden = "";
+                @if (c.Status == AR.ARNews.ClanakStatus.Draft)
+                {
+                    thisoneishidden = "thisOneIsHidden";
+                }
+                <a class="Clanak @thisoneishidden" href="/Clanak?ID=@c.ClanakID" GroupID="@c.GrupaID">
+                    <div style="width: 100%; text-align: center; position: relative; padding-bottom: 47.5%; height: 0">
+                        <img class="Thumbnail" src="@c.Slika" />
+                    </div>
+                    <div style="position: relative; top: 10px;" class="cccc">
+                        <span class="Grupa">@AR.ARNews.Grupa.GetNaziv(c.GrupaID)</span>
+                        <img src="~/images/calender.png" style="float: left; margin-right: 8px; margin-top: 2px" />
+                        <span class="Datum">@c.Datum.ToString("dd. MMMM yyyy", CultureInfo.InvariantCulture)</span>
+                        @if (admin)
+                        {
+                            <span style="margin-left: 5px; color: brown">[@c.Visits]</span>
+                        }
+                        <br />
+                        <p class="Title">@c.Naslov</p>
+                    </div>
+                </a>
+                isi++;
+                adi++;
+
+                if (isi >= inlineStories || currC == clanci.Count)
+                {
+                    @Html.Raw("</div>");
+                    isi = 0;
+                }
+                if (currC >= 16)
+                {
+                    break;
+                }
+
+                if (WideBanners != null && WideBanners.Count > 0 && adi >= adAfterEveryNPosts && Model.ShowFilter != true)
+                {
+                    AR.ARNews.Banner b = WideBanners[Program.rnd.Next(0, WideBanners.Count)];
+                    if (b != null)
+                    {
+                        <div class="CoverBanner" style="max-height: 250px;">
+                            <img src="@b.Image" onclick="window.location.href='@b.Redirect'" style="max-height: 100%; width: 100%" />
+                        </div>
+                    }
+
+                    adi = 0;
+                }
+
+            }
+
+            <br />
+            <br />
+            @if (clanci.Count > 16 && Model.ShowFilter == false)
+            {
+                <button style="width: 100%" onclick="window.location.href='/Home?showFilter=1'">Sehen Sie alle Geschichten in unserem Archiv hier!</button>
+            }
+        </div>
+        @if (!Model.ShowFilter)
+        {
+            <div class="col-sm-3 HideOnMobile">
+                <hr style="border: 3px solid red; background-color: none; width: 40%; margin-left: 0" />
+                <div class="Banner">
+                    <img src="~/images/ECHO0619-cover.jpg" />
+                </div>
+                @{
+                    SideBanners.Shuffle();
+                    if (SideBanners != null && SideBanners.Count <= DisplayNSmallAds)
+                    {
+                        foreach (AR.ARNews.Banner b in SideBanners)
+                        {
+                            if (b.Position == 0)
+                            {
+                                <div class="Banner" style="height: 250px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="Banner" style="height: 500px">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                        }
+                    }
+                    else if (SideBanners != null)
+                    {
+                        int limit = 0;
+                        foreach (AR.ARNews.Banner b in SideBanners)
+                        {
+                            if (b.Position == 0)
+                            {
+                                <div class="Banner">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="Banner">
+                                    <img src="@b.Image" onclick="window.location.href='@b.Redirect'" />
+                                </div>
+                            }
+                            limit++;
+                            if (limit >= DisplayNSmallAds)
+                            {
+                                break;
+                            }
+                        }
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>

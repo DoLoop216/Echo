@@ -1,0 +1,58 @@
+﻿@model AR.ARNews.NonFixedText
+@{
+    ViewData["Title"] = "EditNonFixedText";
+}
+
+<div class="InnerWrapper">
+    <h2>Edit non fixed text ID: @Model.nftID</h2>
+    <br />
+    <h4>This fields are HTML friendly so you can use any HTML tag. Bellow you can see usefull tags.</h4>
+    <h4 style="color: red">Do not edit texts if you do not know what are you doing!</h4>
+    <br />
+    <br />
+
+    <textarea id="input_Text" style="width: 100%; height: 500px">@Model.Text</textarea>
+    <br />
+    <br />
+
+    <button style="float: right; background-color: #e1000f;
+        color: white; font-family: Raleway-Bold; border: none;
+        border-radius: 5px; padding: 5px 10px 5px 10px" onclick="UpdateNFT()">
+        SAVE
+    </button>
+    <br />
+    <br />
+    <br />
+    <div style="font-weight: bolder">
+        Usefull html tags: <br /><br />
+        &lt;br /&gt; - New line<br />
+        &lt;p&gt;some text&lt;/p&gt; - Paragraph<br />
+        &lt;h1&gt;some text&lt;/h1&gt; - Header1<br />
+        &lt;h2&gt;some text&lt;/h2&gt; - Header2<br />
+        &lt;h3&gt;some text&lt;/h3&gt; - Header3<br />
+        &lt;h4&gt;some text&lt;/h4&gt; - Header4<br />
+        &lt;h5&gt;some text&lt;/h5&gt; - Header5<br />
+        &lt;h6&gt;some text&lt;/h6&gt; - Header6<br />
+    </div>
+</div>
+
+<script>
+    function UpdateNFT() {
+        _wait(); 
+        $.ajax({
+            type: "GET",
+            url: "/ControlPanel/AUpdateNFT",
+            data: {
+                "ID": @Model.nftID,
+                "TEXT": $("#input_Text").val()
+            },
+            success: function (data) {
+                window.location = document.referrer;
+            },
+            error: function (data) {
+                alert("There was an error updating this text!");
+                window.location = document.referrer;
+            }
+        });
+    }
+</script>

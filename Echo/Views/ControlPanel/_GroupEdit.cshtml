@@ -1,0 +1,20 @@
+﻿@model AR.ARNews.Grupa
+
+<style>
+    .UpdateGrupa input {
+        margin: 5px;
+        padding-left: 5px;
+    }
+</style>
+
+<div class="UpdateGrupa">
+@using(Html.BeginForm("AUpdateGroup", "ControlPanel", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(x => x.GrupaID);
+
+    <label>@Model.GrupaID</label>
+    @Html.EditorFor(x => x.Naziv);
+    @Html.EditorFor(x => x.DisplayIndex);
+    <button>Update</button>
+}
+</div>

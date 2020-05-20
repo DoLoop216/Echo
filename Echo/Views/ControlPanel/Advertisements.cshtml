@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Advertisements";
+    List<AR.ARNews.Banner> bans = AR.ARNews.Banner.List();
+}
+<style>
+    .add {
+        background-color: #e1000f;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        width: 100%;
+        padding: 10px 0px 10px 0px;
+        border: 5px solid white;
+    }
+
+    .add:hover {
+        color: #e1000f;
+        background-color: white;
+        border: 5px solid #e1000f;
+    }
+</style>
+<div class="InnerWrapper">
+    <div class="row" style="font-size: large; font-family: Raleway; font-weight: bolder; text-align: center">
+        <div class="col-md-6">
+            <p>250 x 250 & 250 x 500</p>
+            @foreach (AR.ARNews.Banner ban in bans.Where(x => x.Position == 1 || x.Position == 0))
+            {
+                if (ban.Position == 0)
+                {
+                    <img src="@ban.Image" style="max-width: 250px; max-height: 250px;" />
+                    <br />
+                    <br />
+                    <h3>Redirecting to: <a href="@ban.Redirect">@ban.Redirect</a></h3>
+                    <button onclick="RemoveAD(@ban.BannerID)">REMOVE</button>
+                    <hr />
+                }
+                else if (ban.Position == 1)
+                {
+                    <img src="@ban.Image" style="max-width: 250px; max-height: 500px;" />
+                    <br />
+                    <br />
+                    <h3>Redirecting to: <a href="@ban.Redirect">@ban.Redirect</a></h3>
+                    <button onclick="RemoveAD(@ban.BannerID)">REMOVE</button>
+                    <hr />
+                }
+                <br />
+                <br />
+            }
+            <button class="add" onclick="window.location.href='/ControlPanel/UploadNewAd'">ADD</button>
+        </div>
+        <div class="col-md-6" style="border-left: 2px solid gray">
+            <p>837 x 250</p>
+            @foreach (AR.ARNews.Banner ban in bans.Where(x => x.Position == 2))
+            {
+                <img src="@ban.Image" style="max-width: 837px; max-height: 250px;" />
+                <br />
+                <br />
+                <button onclick="RemoveAD(@ban.BannerID)">REMOVE</button>
+                <h3>Redirecting to: <a href="@ban.Redirect">@ban.Redirect</a></h3>
+                <hr />
+                <br />
+                <br />
+            }
+            <button class="add" onclick="window.location.href='/ControlPanel/UploadNewAd'">ADD</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function RemoveAD(id) {
+        window.location.href = "/ControlPanel/ARemoveBanner?ID=" + id;
+    }
+</script>
+
