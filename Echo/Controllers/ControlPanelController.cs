@@ -7,6 +7,8 @@ using Echo.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using AR.ARWebAuthorization;
+using System.Threading;
+using AR;
 
 namespace Echo.Controllers
 {
@@ -425,8 +427,16 @@ namespace Echo.Controllers
                 if(User.Validate())
                 {
                     string newHash;
-                    ARWebAuthorization.LogUser(User, out newHash);
+                    try
+                    {
+                        ARWebAuthorization.LogUser(User, out newHash);
+                    }
+                    catch(Exception ex)
+                    {
+                        return View("Error", "LogUser: " + new String(ex.Message.ToString()));
+                    }
                     Response.Cookies.Append("h", newHash);
+                    Thread.Sleep(500);
                     return Redirect("/ControlPanel");
                 }
                 else
@@ -436,8 +446,28 @@ namespace Echo.Controllers
             }
             catch(Exception ex)
             {
-                return View("Error", new String(ex.Message.ToString()));
+                return View("Error", "User.Validate: " + new String(ex.Message.ToString()));
             }
+        }
+
+        [Route("/ControlPanel/EditNews/{id}")]
+        public IActionResult EditNews(int id)
+        {
+            AR.ARNews.News n = AR.ARNews.News.List().Where(x => x.NewsID == id).FirstOrDefault();
+            return View(n);
+        }
+
+        public IActionResult AUpdateNews(AR.ARNews.News n)
+        {
+            try
+            {
+                n.Update();
+            }
+            catch(Exception ex)
+            {
+                return View("Error", new String(ex.ToString()));
+            }
+            return Redirect("/Home/News");
         }
     }
 }

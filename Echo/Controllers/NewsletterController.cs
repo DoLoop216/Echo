@@ -74,40 +74,40 @@ namespace Echo.Controllers
                 int errors = 0;
 
 
-                msg.Body = Text;
-                msg.Bcc.Add("aleksa@termodom.rs");
-                msg.Body += "<br /><a style='display: block; color: gray; text-align: center' href='http://www.echosalzburg.at/ControlPanel/ARemoveMail?id='>Du möchtest künftig keinen Newsletter mehr erhalten? Hier abmelden.</a>";
-
-                smtpClient.Send(msg);
-                return Json("Success sent aleksa");
 
 
                 for (int i = 0; i < li.Count - 1; i++)
                 {
-                    if (li[i].ID != 1)
-                        continue;
-                    msg.Body = Text;
-                    if (IsValidEmail(li[i].Value))
-                    {
-                        msg.Bcc.Add(li[i].Value);
-                        msg.Body += "<br /><a style='display: block; color: gray; text-align: center' href='http://www.echosalzburg.at/ControlPanel/ARemoveMail?id=" + li[i].ID.ToString() + "&h=" + Security.HashPassword((li[i].ID + 1).ToString()) + "'>Du möchtest künftig keinen Newsletter mehr erhalten? Hier abmelden.</a>";
-                    }
-                    else
-                    {
-                        continue;
-                    }
-
                     try
                     {
-                        smtpClient.Send(msg);
-                    }
-                    catch(Exception ex)
-                    {
-                        errors++;
-                    }
+                        if (li[i].ID != 1)
+                            continue;
+                        msg.Body = Text;
+                        if (IsValidEmail(li[i].Value))
+                        {
+                            msg.Bcc.Add(li[i].Value);
+                            msg.Body += "<br /><a style='display: block; color: gray; text-align: center' href='http://www.echosalzburg.at/ControlPanel/ARemoveMail?id=" + li[i].ID.ToString() + "&h=" + Security.HashPassword((li[i].ID + 1).ToString()) + "'>Du möchtest künftig keinen Newsletter mehr erhalten? Hier abmelden.</a>";
+                        }
+                        else
+                        {
+                            continue;
+                        }
 
-                    msg.Bcc.Clear();
-                    break;
+                        try
+                        {
+                            smtpClient.Send(msg);
+                        }
+                        catch (Exception ex)
+                        {
+                            errors++;
+                        }
+
+                        msg.Bcc.Clear();
+                    }
+                    catch(Exception)
+                    {
+
+                    }
                 }
                 return Json("Newsletter successfully sent! [ " + errors  + " ]");
             }

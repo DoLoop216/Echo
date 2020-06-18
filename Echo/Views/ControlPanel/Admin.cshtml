@@ -1,6 +1,17 @@
 ﻿@model AR.ARNews.User
 @{
     ViewData["Title"] = "Admin";
+    List<string> kontaktFiles = Echo.Controllers.HomeController.GetKontaktFiles();
+    if (kontaktFiles != null)
+    {
+        kontaktFiles = kontaktFiles.OrderByDescending(x => x).ToList();
+    }
+
+    List<string> top500Files = Echo.Controllers.HomeController.GetTop500Files();
+    if (top500Files != null)
+    {
+        top500Files = top500Files.OrderByDescending(x => x).ToList();
+    }
 }
 
 <style>
@@ -49,6 +60,32 @@
                 <br />
                 <br />
                 <button onclick="_wait(); window.location.href='/ControlPanel/Logoff'">Logout</button>
+            </div>
+            <div class="col-md-10">
+                <div>
+                    <h2>angewandte Kontakte</h2>
+                    @if (kontaktFiles != null)
+                    {
+                        foreach (string t in kontaktFiles)
+                        {
+                            string[] m = t.Split('\\');
+                            string s = m[1];
+                        <a href="/Home/Kontakt/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
+                        }
+                    }
+                </div>
+                <div>
+                    <h2>angewandte TOP500</h2>
+                    @if (top500Files != null)
+                    {
+                        foreach (string t in top500Files)
+                        {
+                            string[] m = t.Split('\\');
+                            string s = m[1];
+                        <a href="/Home/Top500Details/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
+                        }
+                    }
+                </div>
             </div>
         </div>
     </div>

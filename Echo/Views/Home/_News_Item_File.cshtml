@@ -1,17 +1,18 @@
 ﻿@model AR.ARNews.News
-<div class="newsContainer">
-    @if (Networking.isAdmin(Context.Request))
-    {
-        <text>
-            <a style="display: block; text-align: right; color: red; font-size: large" onclick="_wait(); window.location.href='/ControlPanel/ADeleteNews?ID=@Model.NewsID'">Remove</a>
-        </text>
-    }
-    @if (!string.IsNullOrWhiteSpace(Model.Thumbnail) && Model.Thumbnail.Length > 1)
-    {
-        string tn = Model.Thumbnail.Replace('\\', '/');
-                <div class="newsContainerImage" style="background-image: url(@tn)" ></div>
-    }
-    <h2 class="newsContainerTitle">@Model.Title</h2>
-    <h4>@Model.Text</h4>
-    <button class="LoginButton" onclick="window.open('@Model.Media.Replace('\\', '/')')">Read more</button>
-</div>
+    <div class="newsContainer">
+        @if (Networking.isAdmin(Context.Request))
+        {
+            <text>
+                <a style="display: block; text-align: right; color: red; font-size: large; float: right; margin-left: 15px" onclick="_wait();  window.location.href='/ControlPanel/ADeleteNews?ID=@Model.NewsID'">Remove</a>
+                <a style="display: block; text-align: right; color: red; font-size: large" onclick="_wait(); window.location.href='/ControlPanel/EditNews/@Model.NewsID'">Edit</a>
+            </text>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Thumbnail) && Model.Thumbnail.Length > 1)
+        {
+            string tn = Model.Thumbnail.Replace('\\', '/');
+            <div class="newsContainerImage" style="background-image: url(@tn)"></div>
+        }
+        <h2 class="newsContainerTitle">@Model.Title</h2>
+        <h4>@Model.Text</h4>
+        <button class="LoginButton" onclick="window.open('@Model.Media.Replace('\\', '/')')">Read more</button>
+    </div>

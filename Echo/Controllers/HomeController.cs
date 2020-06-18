@@ -12,12 +12,17 @@ using System.Web;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
+using System.IO.Enumeration;
+using SixLabors.ImageSharp.ColorSpaces;
 
 namespace Echo.Controllers
 {
     public class HomeController : Controller
     {
         private IHostingEnvironment _env;
+
+        private static string KontaktDir = "Kontakt";
+        private static string Top500Dir = "Top500Kontakt";
 
         public HomeController(IHostingEnvironment env)
         {
@@ -97,23 +102,15 @@ namespace Echo.Controllers
 
             try
             {
-                var smtpClient = new SmtpClient
-                {
-                    Host = "smtp.gmail.com", // set your SMTP server name here
-                    Port = 587, // Port 
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential("aristiccitsira@gmail.com", "Debelistrumf123")
-                };
+                if (!Directory.Exists(Top500Dir))
+                    Directory.CreateDirectory(Top500Dir);
 
+                int i = 1;
 
-                using (MailMessage message = new MailMessage())
-                {
-                    message.IsBodyHtml = true;
-                    message.Subject = "ECHO Salzburg - TOP500";
+                while (System.IO.File.Exists(Path.Combine(Top500Dir, DateTime.Now.ToString("yyyyMMdd") + i.ToString())))
+                    i++;
 
-                    message.From = new MailAddress("no-replay@echosalzburg.at");
-
-                    message.Body = String.Format(@"<div>
+                System.IO.File.WriteAllText(Path.Combine(Top500Dir, DateTime.Now.ToString("yyyyMMdd") + i.ToString()), String.Format(@"<div>
 	                    <label style='color: gray'>Firmenname: <span style='color: black;'>{0}</span></label><br>
 	                    <label style='color: gray'>Strasse: <span style='color: black;'>{1}</span></label><br>
 	                    <label style='color: gray'>Hausnr: <span style='color: black;'>{2}</span></label><br>
@@ -122,7 +119,7 @@ namespace Echo.Controllers
 	                    <label style='color: gray'>Tel.Nr: <span style='color: black;'>{5}</span></label><br>
 	                    <label style='color: gray'>Fax.Nr: <span style='color: black;'>{6}</span></label><br>
 	                    <label style='color: gray'>Branchentext 1: <span style='color: black;'>{7}</span></label><br>
-	                    <label style='color: gray'>Umsatz 2018: <span style='color: black;'>{8}</span></label><br>
+	                    <label style='color: gray'>Umsatz 2019: <span style='color: black;'>{8}</span></label><br>
 	                    <label style='color: gray'>kons. Umsatz: <span style='color: black;'>{9}</span></label><br>
 	                    <label style='color: gray'>Gruppenumsatz: <span style='color: black;'>{10}</span></label><br>
 	                    <label style='color: gray'>Eigentümer: <span style='color: black;'>{11}</span></label><br>
@@ -150,12 +147,7 @@ namespace Echo.Controllers
 	                    <label style='color: gray'>In welchen Berufen werden Lehrlinge in Ihrem Unternehmen ausgebildet: <span style='color: black;'>{33}</span></label><br>
 	                    <label style='color: gray'>Bitte nennen Sie uns das Gründungsjahr Ihres Unternehmens: <span style='color: black;'>{34}</span></label><br>
                     </div>", d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11, d12, d13, d14, d15, d16, d17, d18, d19, d20, d21, d22, d23, d24, d25, d26, d27, d28,
-                    d29, d30, d31, d32, d33, d34, d35);
-
-                    message.Bcc.Add("aleksa@crafteam.net");
-
-                    await smtpClient.SendMailAsync(message);
-                }
+                    d29, d30, d31, d32, d33, d34, d35));
             }
             catch (Exception ex)
             {
@@ -227,39 +219,81 @@ namespace Echo.Controllers
         {
             try
             {
-                var smtpClient = new SmtpClient
-                {
-                    Host = "smtp.gmail.com", // set your SMTP server name here
-                    Port = 587, // Port 
-                    EnableSsl = true,
-                    Credentials = new NetworkCredential("aristiccitsira@gmail.com", "Debelistrumf123")
-                };
+                if (!Directory.Exists(KontaktDir))
+                    Directory.CreateDirectory(KontaktDir);
+
+                int i = 1;
+
+                while (System.IO.File.Exists(Path.Combine(KontaktDir, DateTime.Now.ToString("yyyyMMdd") + i.ToString())))
+                    i++;
 
 
-                using (MailMessage message = new MailMessage())
-                {
-                    message.IsBodyHtml = true;
-                    message.Subject = "ECHO Salzburg - Kontakt";
-
-                    message.From = new MailAddress("no-replay@echosalzburg.at");
-
-                    message.Body = String.Format(@"<p>Firma: {0}</p><p>Anrede: {1}</p>
+                System.IO.File.WriteAllText(Path.Combine(KontaktDir, DateTime.Now.ToString("yyyyMMdd") + i.ToString()), String.Format(@"<p>Firma: {0}</p><p>Anrede: {1}</p>
                         <p>Name: {2}</p><p>Zusatz: {3}</p><p>Strase: {4}</p><p>Nr: {5}</p>
                         <p>PLZ: {6}</p><p>Stadt: {7}</p><p>Bundersland: {8}</p><p>Land: {9}</p>
                         <p>Email: {10}</p><p>Nachricht: {11}</p>",
-                        firm, anrede, name, zus, ul, nr, plz, stad, bund, land, em, nach);
-
-                    message.Bcc.Add("aleksa@crafteam.net");
-
-                    await smtpClient.SendMailAsync(message);
-                }
+                        firm, anrede, name, zus, ul, nr, plz, stad, bund, land, em, nach));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Json(ex.ToString());
             }
 
             return Json("success");
+        }
+
+        public static List<string> GetKontaktFiles()
+        {
+            if (!System.IO.Directory.Exists(KontaktDir))
+                return null;
+            List<string> list = new List<string>();
+
+            foreach(string f in Directory.GetFiles(KontaktDir))
+                list.Add(f);
+
+            return list;
+        }
+
+        public static List<string> GetTop500Files()
+        {
+            if (!System.IO.Directory.Exists(Top500Dir))
+                return null;
+
+            List<string> list = new List<string>();
+
+            foreach (string f in Directory.GetFiles(Top500Dir))
+                list.Add(f);
+
+            return list;
+        }
+
+        [Route("/Home/Kontakt/{fileName}")]
+        public IActionResult Kontakt(string fileName)
+        {
+            if (!System.IO.Directory.Exists(KontaktDir))
+                return View("Error", "File doesn't exist!");
+
+            if (!System.IO.File.Exists(Path.Combine(KontaktDir, fileName)))
+                return View("Error", "File doesn't exist!");
+
+            string cont = System.IO.File.ReadAllText(Path.Combine(KontaktDir, fileName));
+
+            return View("Kontakt", cont);
+        }
+
+
+        [Route("/Home/Top500Details/{fileName}")]
+        public IActionResult Top500Details(string fileName)
+        {
+            if(!System.IO.Directory.Exists(Top500Dir))
+                return View("Error", "File doesn't exist!");
+
+            if (!System.IO.File.Exists(Path.Combine(Top500Dir, fileName)))
+                return View("Error", "File doesn't exist!");
+
+            string cont = System.IO.File.ReadAllText(Path.Combine(Top500Dir, fileName));
+
+            return View("Top500Details", cont);
         }
     }
 }

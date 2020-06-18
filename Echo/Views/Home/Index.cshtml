@@ -228,6 +228,34 @@
                     padding: 5px;
                 }
             </style>
+
+            @{ 
+                int fsa = 0;
+            }
+
+        <div style="border-bottom: 1px solid #e1000f; padding-bottom: 50px; margin-bottom: 50px; display: inline-block; width: 100%">
+            @foreach (AR.ARNews.News n in AR.ARNews.News.List())
+            {
+                <a class="Clanak" href="/Home/News" GroupID="news">
+                    <div style="width: 100%; text-align: center; position: relative; padding-bottom: 47.5%; height: 0">
+                        <img class="Thumbnail" src="@n.Thumbnail" />
+                    </div>
+                    <div style="position: relative; top: 10px;" class="cccc">
+                        <span class="Grupa">news</span>
+                        <img src="~/images/calender.png" style="float: left; margin-right: 8px; margin-top: 2px" />
+                        <span class="Datum">@n.Date.ToString("dd. MMMM yyyy", CultureInfo.InvariantCulture)</span>
+
+                        <br />
+                        <p class="Title">@n.Title</p>
+                    </div>
+                </a>
+                if (fsa == 1)
+                {
+                    break;
+                }
+                fsa++;
+            }
+        </div>
             @foreach (AR.ARNews.Clanak c in clanci)
             {
                 currC++;

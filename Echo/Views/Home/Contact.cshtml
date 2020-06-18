@@ -207,24 +207,27 @@
             || Bundersland.length < 1 || Land.length < 1 || Email.length < 1 ||
             Nachricht.length < 1) {
             alert("You must enter all fields!");
+            return;
         }
+
+        _wait();
 
         $.ajax({
             type: "POST",
             url: "/Home/ASendContact",
             data: {
-                firm: Firm,
-                anrede: Anrede,
-                name: Name,
-                zus: Zusatz,
-                ul: Ulica,
-                nr: Nr,
-                plz: PLZ,
-                stad: Stadt,
-                bund: Bundersland,
-                land: Land,
-                em: Email,
-                nach: Nachricht
+                "firm": Firm,
+                "anrede": Anrede,
+                "name": Name,
+                "zus": Zusatz,
+                "ul": Ulica,
+                "nr": Nr,
+                "plz": PLZ,
+                "stad": Stadt,
+                "bund": Bundersland,
+                "land": Land,
+                "em": Email,
+                "nach": Nachricht
             },
             success: function (data) {
                 window.location.href = "/Home/Success?msg=" + "Sie haben uns erfolgreich kontaktiert!";
@@ -241,10 +244,6 @@
             <text>
                 window.location.href = '/ControlPanel/EditNonFixedText?ID=' + id;
             </text>
-        }
-        else
-        {
-            return;
         }
     }
 </script>
