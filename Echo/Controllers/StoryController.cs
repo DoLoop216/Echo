@@ -23,6 +23,8 @@ namespace Echo.Controllers
         {
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
+
+            return Redirect("http://limitlesssoft.com/Dev");
             return View(new AR.ARNews.Clanak(ID));
         }
 
@@ -30,7 +32,7 @@ namespace Echo.Controllers
         {
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
-
+            return Redirect("http://limitlesssoft.com/Dev");
             return View(new AR.ARNews.Clanak());
         }
 

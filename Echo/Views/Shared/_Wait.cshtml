@@ -2,7 +2,10 @@
     <p style="text-align: center; font-size: x-large; margin-top: 50vh; transform: translateY(-50%)">Please wait...</p>
 </div>
 <script>
-    function _wait() {
+    function _wait(text) {
+        if (text != null && text.length > 0) {
+            $("#Wait p").html(text);
+        }
         $("#Wait").show();
     }
 </script>

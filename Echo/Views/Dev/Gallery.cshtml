@@ -1,0 +1,163 @@
+﻿@{
+    @inject IHostingEnvironment HosingEnvironment;
+
+    string filepath = HosingEnvironment.WebRootPath + "\\images";
+    DirectoryInfo d = new DirectoryInfo(filepath);
+
+    List<string> files = new List<string>();
+
+    foreach (var file in d.GetFiles("*.jpg"))
+    {
+        files.Add("'/images/" + file.Name.Replace('\\', '/') + "'");
+    }
+
+    foreach (var file in d.GetFiles("*.jpeg"))
+    {
+        files.Add("'/images/" + file.Name.Replace('\\', '/') + "'");
+    }
+
+    foreach (var file in d.GetFiles("*.png"))
+    {
+        files.Add("'/images/" + file.Name.Replace('\\', '/') + "'");
+    }
+
+    <script>
+        @Html.Raw("var images = [" + string.Join(',', files) + "];")
+    </script>
+}
+
+<style>
+    #ARGalleryWrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+    }
+
+    #ARGallery {
+        position: relative;
+        height: 80vh;
+        width: 100%;
+        background-color: whitesmoke;
+        padding: 1%;
+        border: 1px solid red;
+        overflow-y: auto;
+        box-shadow: 0 0 10px black;
+    }
+
+    .ARGallery-NewItems {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .ARGallery-OldItems {
+        display: none;
+        overflow-y: hidden;
+        width: 100%;
+    }
+
+    .ARGalleryItem {
+        display: inline-block;
+        max-width: 12%;
+        max-height: 200px;
+        margin: 1%;
+    }
+
+        .ARGalleryItem:hover {
+            cursor: pointer;
+            border: 1px solid black;
+        }
+
+    #files {
+        display: none;
+    }
+
+    .upload-button label:hover {
+        cursor: pointer;
+        color: red;
+    }
+</style>
+
+<div id="ARGalleryWrapper">
+    <div id="ARGallery">
+        <span class="close" onclick="$(this).parent().parent().hide();">X</span>
+        <span>Allowed formats: jpg, jpeg, png</span>
+        <form id="form" name="form" action="/uploader" enctype="multipart/form-data" method="post">
+            <div class="buttons">
+                <div class="upload-button">
+                    <label for="files" style="width: 100%; padding-top: 20px; padding-bottom: 20px">Upload image</label>
+                    <input id="files" name="files" type="file" size="1" multiple onchange="uploadFiles('files');" />
+                </div>
+            </div>
+        </form>
+        <div class="ARGallery-NewItems"></div>
+        <button class="ARButton1" onclick="ShowAllImages(this)">Prikaži sve slike</button>
+        <div class="ARGallery-OldItems"></div>
+    </div>
+</div>
+
+<script>
+    function ShowAllImages(element) {
+        $('.ARGallery-OldItems').css("display", "inline-block");
+        $(element).hide();
+        images.forEach((value, index, array) => {
+            $(".ARGallery-OldItems").append('<img class="ARGalleryItem" src="' + value + '" />');
+        });
+    }
+
+    $(function () {
+        $("body").on("click", ".ARGalleryItem", function () {
+            var textArea = document.createElement("textarea");
+            textArea.value = $(this).prop("src");
+
+            // Avoid scrolling to bottom
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+                _wait('Link copied to your clipboard!');
+            } catch (err) {
+                _wait('Error white trying to copy to clipboard!');
+            }
+
+            document.body.removeChild(textArea);
+        })
+    })
+
+
+    function uploadFiles(inputId) {
+        var input = document.getElementById(inputId);
+        var files = input.files;
+        var formData = new FormData();
+
+        for (var i = 0; i != files.length; i++) {
+            formData.append("files", files[i]);
+        }
+
+        _wait("Uploading.... please wait...");
+
+        $.ajax({
+            url: "/Dev/AUploadImage",
+            data: formData,
+            processData: false,
+            contentType: false,
+            type: "POST",
+            success: function (data) {
+                $(".ARGallery-NewItems").append(data);
+                $("#Wait").hide();
+            },
+            error: function (data) {
+                _wait("<span style='color: red'>Error occured while uploading.<br />Contact administrator!</span>");
+            }
+        });
+    }
+</script>
