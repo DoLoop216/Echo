@@ -1,7 +1,7 @@
 ﻿@model int?
 @{
     ViewData["Title"] = "Archieve";
-    List<AR.ARNews.Clanak> clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings());
+    List<AR.ARNews.Clanak> clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings(), null);
 }
 
 <link rel="stylesheet" type="text/css" href="~/css/Home/Archieve.css" />
@@ -15,7 +15,7 @@
         <div id="FilterArcCategory" style="padding: 5px;">
             <span style="font-family: Raleway-Bold">Kategorie: </span>
             <button class="FilterButton selected" data-grupaid="-1" onclick="ChangeCategory(this)">Alles</button>
-            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List(null))
             {
                 <button class="FilterButton" onclick="ChangeCategory(this)" data-grupaid="@g.GrupaID">@g.Naziv</button>
             }
@@ -27,7 +27,7 @@
             <div onclick="window.location.href='/Clanak?ID=@c.ClanakID'" class="Clanak" data-grupaid="@c.GrupaID">
                 <div class="Thumbnail" style="background-image: url('@c.Slika.Replace('\\', '/')')"></div>
                 <div class="infoLine">
-                    <span class="Group">@AR.ARNews.Grupa.GetNaziv(c.GrupaID)</span>
+                    <span class="Group">@AR.ARNews.Grupa.GetNaziv(c.GrupaID, null)</span>
                     <span class="Date">@c.Datum.ToString("dd.MMM.yyyy")</span>
                 </div>
                 <h2 class="Title">@c.Naslov</h2>

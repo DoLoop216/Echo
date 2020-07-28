@@ -10,8 +10,8 @@
     {
         admin = true;
     }
-    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
-    SideBanners.AddRange(AR.ARNews.Banner.List(0));
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1, null);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0, null));
     int DisplayNSmallAds = 2;
 }
 
@@ -51,7 +51,7 @@
             {
                 <h4>Views: @Model.Visits</h4><br />
             }
-            <span class="Grupa" style="font-size: x-small">@AR.ARNews.Grupa.GetNaziv(Model.GrupaID)</span>
+            <span class="Grupa" style="font-size: x-small">@AR.ARNews.Grupa.GetNaziv(Model.GrupaID, null)</span>
             <img src="~/images/calender.png" style="height: 20px; margin-left: 10px; transform: translateY(-3px);" />
             <span style="color: gray; margin-left: 3px; font-weight: bolder; font-size: x-small; font-family: Montserrat-Regular;">@Model.Datum.ToString("dd/MM/yyyy")</span>
             <br />

@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Users";
-    List<AR.ARNews.User> users = AR.ARNews.User.List();
+    List<AR.ARNews.User> users = AR.ARNews.User.List(null);
 }
 
 <style>
@@ -28,8 +28,8 @@
         </tr>
         @foreach (AR.ARNews.User u in users)
         {
-            <tr class="highlightable" onclick="window.location.href='/User?ID=@u.UserID'">
-                <td>@u.UserID</td>
+            <tr class="highlightable" onclick="window.location.href='/User?ID=@u.ID'">
+                <td>@u.ID</td>
                 <td>@u.Username</td>
                 <td>@u.Nickname</td>
                 <td>@u.Type.ToString()</td>

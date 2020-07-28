@@ -25,7 +25,7 @@ namespace Echo.Controllers
         {
             try
             {
-                AR.ARNews.Mail.Add(mail);
+                AR.ARNews.Mail.Add(mail, null);
             }
             catch(AR.ARException ex)
             {
@@ -70,7 +70,7 @@ namespace Echo.Controllers
                 msg.From = new MailAddress("no-reply@echosalzburg.at");
 
 
-                List<AR.ARNews.Mail> li = AR.ARNews.Mail.List();
+                List<AR.ARNews.Mail> li = AR.ARNews.Mail.List(null);
                 int errors = 0;
 
 

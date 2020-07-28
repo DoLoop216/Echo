@@ -62,7 +62,7 @@
                 <tr class="story" onclick="window.location.href='/Story/Edit?ID=@c.ClanakID'">
                     <td>@c.Naslov</td>
                     <td>@c.Datum.ToString("dd/MM/yyyy")</td>
-                    <td>@AR.ARNews.User.GetDisplayName(@c.KorisnikID)</td>
+                    <td>@AR.ARNews.User.GetDisplayName(@c.KorisnikID, null)</td>
                 </tr>
             }
         </table>

@@ -24,7 +24,7 @@ namespace Echo
             ARWebAuthorizationUser u = ARWebAuthorization.GetUser(Request.Cookies["h"]);
 
             if (u != null && u.LocalUserClass != null)
-                return (u.LocalUserClass as AR.ARNews.User).UserID;
+                return (u.LocalUserClass as AR.ARNews.User).ID;
 
             return -1;
         }

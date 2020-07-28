@@ -102,13 +102,13 @@
         </style>
 
         <div style="font-family: Raleway-Regular; margin-bottom: 60px; color: #2f2c2c" class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=4'">
-            @Html.Raw(AR.ARNews.NonFixedText.Get(4).Text)
+            @Html.Raw(AR.ARNews.NonFixedText.Get(4, null).Text)
         </div>
     }
     else
     {
         <p style="font-family: Raleway-Regular; margin-bottom: 60px; color: #2f2c2c">
-            @Html.Raw(AR.ARNews.NonFixedText.Get(4).Text)
+            @Html.Raw(AR.ARNews.NonFixedText.Get(4, null).Text)
         </p>
     }
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>

@@ -14,7 +14,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            return View(new AR.ARNews.User(ID));
+            return View(new AR.ARNews.User(ID, null));
         }
 
         public IActionResult New()
@@ -45,7 +45,7 @@ namespace Echo.Controllers
         {
             try
             {
-                AR.ARNews.User.SetPassword(userID, Security.HashPassword(pw));
+                AR.ARNews.User.SetPassword(userID, Security.HashPassword(pw), null);
                 return Json("success");
             }
             catch (Exception ex)
@@ -61,7 +61,7 @@ namespace Echo.Controllers
                 return Redirect("/ControlPanel");
             try
             {
-                AR.ARNews.User.Add(user);
+                AR.ARNews.User.Add(user, null);
                 return Redirect("/User/List");
             }
             catch (Exception ex)
@@ -75,9 +75,9 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            user.Update();
+            user.Update(null);
 
-            return Redirect("/User?ID=" + user.UserID);
+            return Redirect("/User?ID=" + user.ID);
         }
     }
 }

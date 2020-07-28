@@ -118,7 +118,7 @@
                     <p style="font-size: 12px; color: #71737a; font-family: Montserrat-Regular">Gerne stehen Ihnen folgende Personen für Ihre Wünsche, Anregungen und Fragen zur Verfügung:</p>
                     <hr />
                     @{
-                        List<AR.ARNews.Employee> emps = AR.ARNews.Employee.List();
+                        List<AR.ARNews.Employee> emps = AR.ARNews.Employee.List(null);
                         emps.Sort((x, y) => x.DisplayIndex.CompareTo(y.DisplayIndex));
                     }
 
@@ -149,19 +149,19 @@
                         }
                     }
                     <div class="col-sm-12" style="font-family: Montserrat-Bold; font-size: 12px; color: gray">
-                        <div>Herausgeber und Medieninhaber:<span class="normalp @c" onclick="Edit(5)">@Html.Raw(AR.ARNews.NonFixedText.Get(5).Text)</span></div><br />
-                        <div>Geschäftsführung:<span class="normalp @c" onclick="Edit(6)">@Html.Raw(AR.ARNews.NonFixedText.Get(6).Text)</span></div><br />
-                        <div>Verlagssleitung:<span class="normalp @c" onclick="Edit(7)">@Html.Raw(AR.ARNews.NonFixedText.Get(7).Text)</span></div><br />
-                        <div>Redaktion:<span class="normalp @c" onclick="Edit(8)">@Html.Raw(AR.ARNews.NonFixedText.Get(8).Text)</span></div><br />
-                        <div>Layout / Bildbearbeitung:<span class="normalp @c" onclick="Edit(9)">@Html.Raw(AR.ARNews.NonFixedText.Get(9).Text)</span></div><br />
-                        <div>Anzeigen:<span class="normalp @c" onclick="Edit(10)">@Html.Raw(AR.ARNews.NonFixedText.Get(10).Text)</span></div><br />
-                        <div>Telefon:<span class="normalp @c" onclick="Edit(11)">@Html.Raw(AR.ARNews.NonFixedText.Get(11).Text)</span></div><br />
-                        <div>Fax:<span class="normalp @c" onclick="Edit(12)">@Html.Raw(AR.ARNews.NonFixedText.Get(12).Text)</span></div><br />
-                        <div>E-mail (Redaktion):<span class="normalp @c" onclick="Edit(13)">@Html.Raw(AR.ARNews.NonFixedText.Get(13).Text)</span></div><br />
-                        <div>E-mail (Anzeigenberatung):<span class="normalp @c" onclick="Edit(14)">@Html.Raw(AR.ARNews.NonFixedText.Get(14).Text)</span></div><br />
-                        <div>Firmenbuch:<span class="normalp @c" onclick="Edit(15)">@Html.Raw(AR.ARNews.NonFixedText.Get(15).Text)</span></div><br />
-                        <div>Verlagspostamt:<span class="normalp @c" onclick="Edit(16)">@Html.Raw(AR.ARNews.NonFixedText.Get(16).Text)</span></div><br />
-                        <div>Offenlegung gemäß § 25<br />Mediengesetz<span class="normalp @c" onclick="Edit(17)">@Html.Raw(AR.ARNews.NonFixedText.Get(17).Text)</span></div>
+                        <div>Herausgeber und Medieninhaber:<span class="normalp @c" onclick="Edit(5)">@Html.Raw(AR.ARNews.NonFixedText.Get(5, null).Text)</span></div><br />
+                        <div>Geschäftsführung:<span class="normalp @c" onclick="Edit(6)">@Html.Raw(AR.ARNews.NonFixedText.Get(6, null).Text)</span></div><br />
+                        <div>Verlagssleitung:<span class="normalp @c" onclick="Edit(7)">@Html.Raw(AR.ARNews.NonFixedText.Get(7, null).Text)</span></div><br />
+                        <div>Redaktion:<span class="normalp @c" onclick="Edit(8)">@Html.Raw(AR.ARNews.NonFixedText.Get(8, null).Text)</span></div><br />
+                        <div>Layout / Bildbearbeitung:<span class="normalp @c" onclick="Edit(9)">@Html.Raw(AR.ARNews.NonFixedText.Get(9, null).Text)</span></div><br />
+                        <div>Anzeigen:<span class="normalp @c" onclick="Edit(10)">@Html.Raw(AR.ARNews.NonFixedText.Get(10, null).Text)</span></div><br />
+                        <div>Telefon:<span class="normalp @c" onclick="Edit(11)">@Html.Raw(AR.ARNews.NonFixedText.Get(11, null).Text)</span></div><br />
+                        <div>Fax:<span class="normalp @c" onclick="Edit(12)">@Html.Raw(AR.ARNews.NonFixedText.Get(12, null).Text)</span></div><br />
+                        <div>E-mail (Redaktion):<span class="normalp @c" onclick="Edit(13)">@Html.Raw(AR.ARNews.NonFixedText.Get(13, null).Text)</span></div><br />
+                        <div>E-mail (Anzeigenberatung):<span class="normalp @c" onclick="Edit(14)">@Html.Raw(AR.ARNews.NonFixedText.Get(14, null).Text)</span></div><br />
+                        <div>Firmenbuch:<span class="normalp @c" onclick="Edit(15)">@Html.Raw(AR.ARNews.NonFixedText.Get(15, null).Text)</span></div><br />
+                        <div>Verlagspostamt:<span class="normalp @c" onclick="Edit(16)">@Html.Raw(AR.ARNews.NonFixedText.Get(16, null).Text)</span></div><br />
+                        <div>Offenlegung gemäß § 25<br />Mediengesetz<span class="normalp @c" onclick="Edit(17)">@Html.Raw(AR.ARNews.NonFixedText.Get(17, null).Text)</span></div>
                     </div>
                 </div>
             </div>

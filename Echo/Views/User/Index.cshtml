@@ -14,9 +14,9 @@
     @using (Html.BeginForm("AUpdate", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <button type="button" onclick="window.history.back()">< back</button><br /><br />
-        <button type="button" onclick="window.location.href='/User/ResetPW?ID=@Model.UserID'" style="float: right">Reset password</button>
-        @Html.HiddenFor(k => k.UserID);
-        <label>ID:</label>@Model.UserID<br />
+        <button type="button" onclick="window.location.href='/User/ResetPW?ID=@Model.ID'" style="float: right">Reset password</button>
+        @Html.HiddenFor(k => k.ID);
+        <label>ID:</label>@Model.ID<br />
         <label>Username:</label>@Html.EditorFor(k => k.Username)<br />
         <label>Display name:</label>@Html.EditorFor(k => k.Nickname)<br /><br />
         <label>Type:</label>@Html.DropDownListFor(k => k.Type, new SelectList(new List<Tuple<int, string>>() {

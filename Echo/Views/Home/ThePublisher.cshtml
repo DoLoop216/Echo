@@ -32,11 +32,11 @@
 
             <br />
             <div class="col-lg-9">
-                <span class="editable Title" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=1'">@Html.Raw(AR.ARNews.NonFixedText.Get(1).Text)</span>
+                <span class="editable Title" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=1'">@Html.Raw(AR.ARNews.NonFixedText.Get(1, null).Text)</span>
                 <br />
-                <p class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=2'">@Html.Raw(AR.ARNews.NonFixedText.Get(2).Text)</p>
+                <p class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=2'">@Html.Raw(AR.ARNews.NonFixedText.Get(2, null).Text)</p>
                 <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=3'">
-                    @Html.Raw(AR.ARNews.NonFixedText.Get(3).Text)
+                    @Html.Raw(AR.ARNews.NonFixedText.Get(3, null).Text)
                 </div>
             </div>
             <div class="col-lg-3">
@@ -54,11 +54,11 @@ else
 
             <br />
             <div class="col-lg-9">
-                <span class="Title">@Html.Raw(AR.ARNews.NonFixedText.Get(1).Text)</span>
+                <span class="Title">@Html.Raw(AR.ARNews.NonFixedText.Get(1, null).Text)</span>
                 <br />
-                <p>@Html.Raw(AR.ARNews.NonFixedText.Get(2).Text)</p>
+                <p>@Html.Raw(AR.ARNews.NonFixedText.Get(2, null).Text)</p>
                 <div class="editable">
-                    @Html.Raw(AR.ARNews.NonFixedText.Get(3).Text)
+                    @Html.Raw(AR.ARNews.NonFixedText.Get(3, null).Text)
                 </div>
             </div>
             <div class="col-lg-3">

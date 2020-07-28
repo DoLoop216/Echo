@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Employees";
-    List<AR.ARNews.Employee> emps = AR.ARNews.Employee.List();
+    List<AR.ARNews.Employee> emps = AR.ARNews.Employee.List(null);
     emps.Sort((x, y) => x.DisplayIndex.CompareTo(y.DisplayIndex));
 }
 

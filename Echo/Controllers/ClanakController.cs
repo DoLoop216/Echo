@@ -13,7 +13,7 @@ namespace Echo.Controllers
         {
             if (ID == null)
                 return View("Error", new String("Story not found!"));
-            AR.ARNews.Clanak c = new AR.ARNews.Clanak((int)ID);
+            AR.ARNews.Clanak c = new AR.ARNews.Clanak((int)ID, null);
 
             if (c.Status == AR.ARNews.ClanakStatus.Draft)
                 if (!Networking.isAdmin(Request))

@@ -61,8 +61,8 @@
             {
                 if (u.Type == AR.ARNews.UserType.Administrator)
                 {
-                    <tr class="user administrator" onclick="window.location.href='/User?ID=@u.UserID'">
-                        <td>@u.UserID.ToString()</td>
+                    <tr class="user administrator" onclick="window.location.href='/User?ID=@u.ID'">
+                        <td>@u.ID.ToString()</td>
                         <td>@u.Username</td>
                         <td>@u.Nickname</td>
                         <td>@u.Type.ToString()</td>
@@ -70,8 +70,8 @@
                 }
                 else
                 {
-                    <tr class="user" onclick="window.location.href='/User?ID=@u.UserID'">
-                        <td>@u.UserID.ToString()</td>
+                    <tr class="user" onclick="window.location.href='/User?ID=@u.ID'">
+                        <td>@u.ID.ToString()</td>
                         <td>@u.Username</td>
                         <td>@u.Nickname</td>
                         <td>@u.Type.ToString()</td>

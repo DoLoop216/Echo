@@ -46,7 +46,7 @@
                 Preislisten und <span style="color: rgb(255, 0, 5)">Mediadaten</span>
             </h2>
 
-            <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=21'">@Html.Raw(AR.ARNews.NonFixedText.Get(21).Text)</div>
+            <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=21'">@Html.Raw(AR.ARNews.NonFixedText.Get(21, null).Text)</div>
             <button id="DownloadButton">
                 <img src="~/images/mediadatenPricelistImage.jpg" onclick="window.open('/PDF/PL_ECHO_2020.pdf')" />
                 <br />

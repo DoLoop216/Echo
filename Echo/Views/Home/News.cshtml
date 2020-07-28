@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "News";
-    List<AR.ARNews.News> news = AR.ARNews.News.List();
+    List<AR.ARNews.News> news = AR.ARNews.News.List(null);
 
     bool admin = false;
 
@@ -13,8 +13,8 @@
     {
         news = news.Where(x => x.Visible == true).ToList();
     }
-    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
-    SideBanners.AddRange(AR.ARNews.Banner.List(0));
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1, null);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0, null));
     int DisplayNSmallAds = 2;
 }
 

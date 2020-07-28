@@ -48,7 +48,7 @@
         <br />
         <div class="col-lg-9">
             <span class="Title">ECHO</span><br /><br />
-            @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1337))
+            @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1337, null))
             {
                 <div class="product">
                     <img src="@b.Image" />
@@ -77,7 +77,7 @@
             <div style="display: inline-block">
                 <span class="Title" style="display: inline-block">CORPORATE PUBLISHING</span><br /><br />
 
-                @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1338))
+                @foreach (AR.ARNews.Banner b in AR.ARNews.Banner.List(1338, null))
                 {
                     <div class="product">
                         <img src="@b.Image" />

@@ -14,12 +14,12 @@ namespace Echo.Controllers
             {
                 if (ID == "all")
                 {
-                    foreach (AR.ARNews.Clanak c in AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings()))
-                        AR.ARNews.Clanak.RaiseVisit(c.ClanakID);
+                    foreach (AR.ARNews.Clanak c in AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings(), null))
+                        AR.ARNews.Clanak.RaiseVisit(c.ClanakID, null);
                 }
                 else
                 {
-                    AR.ARNews.Clanak.RaiseVisit(Convert.ToInt32(ID));
+                    AR.ARNews.Clanak.RaiseVisit(Convert.ToInt32(ID), null);
                 }
                 return View("Success", "Uspesno!");
             }

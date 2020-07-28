@@ -2,9 +2,9 @@
 @{
     ViewData["Title"] = "Home";
     List<AR.ARNews.Clanak> clanci;
-    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1);
-    SideBanners.AddRange(AR.ARNews.Banner.List(0));
-    List<AR.ARNews.Banner> WideBanners = AR.ARNews.Banner.List(2);
+    List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1, null);
+    SideBanners.AddRange(AR.ARNews.Banner.List(0, null));
+    List<AR.ARNews.Banner> WideBanners = AR.ARNews.Banner.List(2, null);
 
     int DisplayNSmallAds = 2;
 
@@ -16,11 +16,11 @@
     }
     if (Model.OnlySalzburg)
     {
-        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings() { GrupaID = 7 });
+        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings() { GrupaID = 7 }, null);
     }
     else
     {
-        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings());
+        clanci = AR.ARNews.Clanak.List(new AR.ARNews.ClanakSettings(), null);
     }
 
     if(!admin)
@@ -166,7 +166,7 @@
                         <div id="FilterArcCategory" style="padding: 5px;">
                             <span style="font-family: Raleway-Bold">Kategorie: </span>
                             <button class="FilterButton selected" data-grupaid="-1" onclick="ChangeCategory(this)">Alles</button>
-                            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+                            @foreach (AR.ARNews.Grupa g in AR.ARNews.Grupa.List(null))
                             {
                                 <button class="FilterButton" onclick="ChangeCategory(this)" data-grupaid="@g.GrupaID">@g.Naziv</button>
                             }
@@ -234,7 +234,7 @@
             }
 
         <div style="border-bottom: 1px solid #e1000f; padding-bottom: 50px; margin-bottom: 50px; display: inline-block; width: 100%">
-            @foreach (AR.ARNews.News n in AR.ARNews.News.List())
+            @foreach (AR.ARNews.News n in AR.ARNews.News.List(null))
             {
                 <a class="Clanak" href="/Home/News" GroupID="news">
                     <div style="width: 100%; text-align: center; position: relative; padding-bottom: 47.5%; height: 0">
@@ -273,7 +273,7 @@
                         <img class="Thumbnail" src="@c.Slika" />
                     </div>
                     <div style="position: relative; top: 10px;" class="cccc">
-                        <span class="Grupa">@AR.ARNews.Grupa.GetNaziv(c.GrupaID)</span>
+                        <span class="Grupa">@AR.ARNews.Grupa.GetNaziv(c.GrupaID, null)</span>
                         <img src="~/images/calender.png" style="float: left; margin-right: 8px; margin-top: 2px" />
                         <span class="Datum">@c.Datum.ToString("dd. MMMM yyyy", CultureInfo.InvariantCulture)</span>
                         @if (admin)

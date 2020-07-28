@@ -24,15 +24,14 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            return Redirect("http://limitlesssoft.com/Dev");
-            return View(new AR.ARNews.Clanak(ID));
+            return View(new AR.ARNews.Clanak(ID, null));
         }
 
         public IActionResult New()
         {
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
-            return Redirect("http://limitlesssoft.com/Dev");
+
             return View(new AR.ARNews.Clanak());
         }
 
@@ -42,7 +41,7 @@ namespace Echo.Controllers
                 return Redirect("/ControlPanel");
             try
             {
-                AR.ARNews.Clanak.Remove(ID);
+                AR.ARNews.Clanak.Remove(ID, null);
                 return Redirect("/");
             }
             catch(AR.ARException ex)
@@ -134,7 +133,7 @@ namespace Echo.Controllers
 
             try
             {
-                c.Update();
+                c.Update(null);
                 return Redirect("/Story/Edit?ID=" + c.ClanakID);
             }
             catch(Exception ex)
@@ -151,8 +150,8 @@ namespace Echo.Controllers
             try
             {
                 c.KorisnikID = Networking.GetID(Request);
-                AR.ARNews.Clanak.Add(c);
-                return Redirect("/Clanak?ID=" + AR.ARNews.Clanak.MaxID());
+                AR.ARNews.Clanak.Add(c, null);
+                return Redirect("/Clanak?ID=" + AR.ARNews.Clanak.MaxID(null));
             }
             catch (Exception ex)
             {
@@ -167,7 +166,7 @@ namespace Echo.Controllers
 
             try
             {
-                AR.ARNews.Clanak.SetDate(ID, Date);
+                AR.ARNews.Clanak.SetDate(ID, Date, null);
                 return Json("success");
             }
             catch (Exception ex)
@@ -179,7 +178,7 @@ namespace Echo.Controllers
         public static void _AMarkVisit(int StoryID)
         {
             Thread t1 = new Thread(() => {
-                AR.ARNews.Clanak.RaiseVisit(StoryID);
+                AR.ARNews.Clanak.RaiseVisit(StoryID, null);
             });
 
             t1.Start();

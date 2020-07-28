@@ -79,7 +79,7 @@
                     <br />
                     <p style="font-size: large; font-family: Raleway-Regular; font-weight: bolder; border-bottom: 1px solid lightgray;
                         padding-bottom: 10px;">ARCHIV</p>
-                    @foreach(AR.ARNews.Grupa g in AR.ARNews.Grupa.List())
+                    @foreach(AR.ARNews.Grupa g in AR.ARNews.Grupa.List(null))
                     {
                         <a style="font-family: Raleway-Regular" href="/Home/Archieve?grupaid=@g.GrupaID">@g.Naziv</a>
                     }

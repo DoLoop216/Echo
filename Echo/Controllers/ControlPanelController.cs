@@ -49,7 +49,7 @@ namespace Echo.Controllers
             switch(modul)
             {
                 case "Users":
-                    return View("Users", AR.ARNews.User.List());
+                    return View("Users", AR.ARNews.User.List(null));
                 case "Stories":
                     return View("Stories", ClanakModel.List(Request));
                 case "News":
@@ -94,7 +94,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            return View(new AR.ARNews.Employee(ID));
+            return View(new AR.ARNews.Employee(ID, null));
         }
         public IActionResult Employees()
         {
@@ -109,7 +109,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            g.Update();
+            g.Update(null);
 
             return Redirect("/ControlPanel/GroupMng");
         }
@@ -118,7 +118,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.Grupa.Add(Name);
+            AR.ARNews.Grupa.Add(Name, null);
 
             return Redirect("/ControlPanel/GroupMng");
         }
@@ -141,7 +141,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            return View(AR.ARNews.NonFixedText.Get(ID));
+            return View(AR.ARNews.NonFixedText.Get(ID, null));
         }
         public IActionResult Logoff()
         {
@@ -153,7 +153,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.Employee.Remove(ID);
+            AR.ARNews.Employee.Remove(ID, null);
 
             return Redirect("/ControlPanel/Employees");
         }
@@ -164,7 +164,7 @@ namespace Echo.Controllers
                 return Redirect("/ControlPanel");
 
 
-            AR.ARNews.Employee.Update(emp);
+            AR.ARNews.Employee.Update(emp, null);
 
             return Redirect("/ControlPanel/EditEmployee?ID=" + emp.ID);
         }
@@ -184,7 +184,7 @@ namespace Echo.Controllers
                     m.File.CopyTo(fs);
 
 
-                AR.ARNews.Banner.Add(m.Type, "/ads/" + fileName + "." + ext, m.Redirect);
+                AR.ARNews.Banner.Add(m.Type, "/ads/" + fileName + "." + ext, m.Redirect, null);
 
 
                 return Redirect("/ControlPanel/Admin?modul=ad");
@@ -212,12 +212,12 @@ namespace Echo.Controllers
                     case 1337:
                         using (System.IO.FileStream fs = new System.IO.FileStream(folderPath + "\\Echo\\" + fileName + "." + ext, FileMode.Create))
                             m.File.CopyTo(fs);
-                        AR.ARNews.Banner.Add(m.Type, "/Products/Echo/" + fileName + "." + ext, m.Redirect);
+                        AR.ARNews.Banner.Add(m.Type, "/Products/Echo/" + fileName + "." + ext, m.Redirect, null);
                         break;
                     case 1338:
                         using (System.IO.FileStream fs = new System.IO.FileStream(folderPath + "\\Other\\" + fileName + "." + ext, FileMode.Create))
                             m.File.CopyTo(fs);
-                        AR.ARNews.Banner.Add(m.Type, "/Products/Other/" + fileName + "." + ext, m.Redirect);
+                        AR.ARNews.Banner.Add(m.Type, "/Products/Other/" + fileName + "." + ext, m.Redirect, null);
                         break;
                     default:
                         throw new Exception("Unknown type!");
@@ -235,7 +235,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.Banner.Remove(ID);
+            AR.ARNews.Banner.Remove(ID, null);
 
             return Redirect("/ControlPanel/Admin?modul=ad");
         }
@@ -244,7 +244,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.Banner.Remove(ID);
+            AR.ARNews.Banner.Remove(ID, null);
 
             return Redirect("/Home/Products");
         }
@@ -253,7 +253,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request) && Security.HashPassword((ID + 1).ToString()) != h)
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.Mail.Remove(ID);
+            AR.ARNews.Mail.Remove(ID, null);
 
             if (Networking.isAdmin(Request))
                 return Redirect("/ControlPanel/Admin?modul=Emails");
@@ -265,7 +265,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.NonFixedText.Set(ID, TEXT);
+            AR.ARNews.NonFixedText.Set(ID, TEXT, null);
 
             return Json("Success");
         }
@@ -274,7 +274,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.News.Show(ID);
+            AR.ARNews.News.Show(ID, null);
 
             return Redirect("/Home/News");
         }
@@ -283,7 +283,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.News.Hide(ID);
+            AR.ARNews.News.Hide(ID, null);
 
             return Redirect("/Home/News");
         }
@@ -292,7 +292,7 @@ namespace Echo.Controllers
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
 
-            AR.ARNews.News.Remove(ID);
+            AR.ARNews.News.Remove(ID, null);
 
             return Redirect("/Home/News");
         }
@@ -310,7 +310,7 @@ namespace Echo.Controllers
             {
                 try
                 {
-                    AR.ARNews.Mail.Add(s);
+                    AR.ARNews.Mail.Add(s, null);
                 }
                 catch(Exception ex)
                 {
@@ -326,7 +326,7 @@ namespace Echo.Controllers
 
             try
             {
-                AR.ARNews.Clanak.SetStatus(ID, AR.ARNews.ClanakStatus.Published);
+                AR.ARNews.Clanak.SetStatus(ID, AR.ARNews.ClanakStatus.Published, null);
                 return Json("success");
             }
             catch
@@ -341,7 +341,7 @@ namespace Echo.Controllers
 
             try
             {
-                AR.ARNews.Clanak.SetStatus(ID, AR.ARNews.ClanakStatus.Draft);
+                AR.ARNews.Clanak.SetStatus(ID, AR.ARNews.ClanakStatus.Draft, null);
                 return Json("success");
             }
             catch
@@ -381,19 +381,19 @@ namespace Echo.Controllers
                                 return View("Error", new String("Not supported format of media!"));
                         }
 
-                        string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "News") + "\\" + (AR.ARNews.News.MaxID() + 1).ToString() + "." + ext;
+                        string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "News") + "\\" + (AR.ARNews.News.MaxID(null) + 1).ToString() + "." + ext;
                         using (FileStream fs = new FileStream(filePath, FileMode.Create))
                         {
                             Model.Media.CopyTo(fs);
                         }
 
-                        AR.ARNews.News.Add(Model.News.Title, Model.News.Thumbnail, Model.News.Text, "\\News\\" + (AR.ARNews.News.MaxID() + 1).ToString() + "." + ext, Model.News.MediaType);
+                        AR.ARNews.News.Add(Model.News.Title, Model.News.Thumbnail, Model.News.Text, "\\News\\" + (AR.ARNews.News.MaxID(null) + 1).ToString() + "." + ext, Model.News.MediaType, null);
                     }
                 }
                 else
                 {
                     Model.News.MediaType = AR.ARNews.News.NewsMediaType.Null;
-                    AR.ARNews.News.Add(Model.News.Title, Model.News.Thumbnail, Model.News.Text, null, Model.News.MediaType);
+                    AR.ARNews.News.Add(Model.News.Title, Model.News.Thumbnail, Model.News.Text, null, Model.News.MediaType, null);
                 }
 
                 return Redirect("/Home/News");
@@ -412,7 +412,7 @@ namespace Echo.Controllers
 
             try
             {
-                AR.ARNews.Employee.Add(emp);
+                AR.ARNews.Employee.Add(emp, null);
             }
             catch(Exception ex)
             {
@@ -424,7 +424,7 @@ namespace Echo.Controllers
         {
             try
             {
-                if(User.Validate())
+                if(User.Validate(null))
                 {
                     string newHash;
                     try
@@ -453,7 +453,7 @@ namespace Echo.Controllers
         [Route("/ControlPanel/EditNews/{id}")]
         public IActionResult EditNews(int id)
         {
-            AR.ARNews.News n = AR.ARNews.News.List().Where(x => x.NewsID == id).FirstOrDefault();
+            AR.ARNews.News n = AR.ARNews.News.List(null).Where(x => x.NewsID == id).FirstOrDefault();
             return View(n);
         }
 
@@ -461,7 +461,7 @@ namespace Echo.Controllers
         {
             try
             {
-                n.Update();
+                n.Update(null);
             }
             catch(Exception ex)
             {
