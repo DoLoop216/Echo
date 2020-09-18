@@ -7,11 +7,11 @@
     @using (Html.BeginForm("CreateNew", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <label>Username: </label>
-        @Html.TextBoxFor(x => x.Username);
+        @Html.TextBoxFor(x => x.Name);
         <br />
 
         <label>Password: </label>
-        @Html.TextBoxFor(k => k.Password);
+        @Html.TextBoxFor(k => k.PW);
         <br />
 
         <label>Nickname </label>

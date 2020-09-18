@@ -66,19 +66,19 @@
                 margin-bottom: 20px">
                 ABO ECHO SALZBURG
             </h3>
-            <select>
-                <option value="0">3 Monate kostenlos</option>
-                <option value="1">14  Ausgaben um nur € 28,--</option>
+            <select id="SubType">
+                <option value="0" selected>3 Monate kostenlos</option>
+                <option value="1">14 Ausgaben um nur € 28,--</option>
             </select>
             <br />
-            <input placeholder="Name" /><br />
-            <input placeholder="Straße" />
-            <input placeholder="Nr." /><br />
-            <input placeholder="PLZ" />
-            <input placeholder="Ort" /><br />
-            <input placeholder="Land" /><br />
-            <input placeholder="Telefon" /><br />
-            <input placeholder="Email" /><br />
+            <input id="Name_input" placeholder="Name" /><br />
+            <input id="Strase_input" placeholder="Straße" />
+            <input id="Nr_input" placeholder="Nr." /><br />
+            <input id="Plz_input" placeholder="PLZ" />
+            <input id="Ort_input" placeholder="Ort" /><br />
+            <input id="Land_input" placeholder="Land" /><br />
+            <input id="Telefon_input" placeholder="Telefon" /><br />
+            <input id="Email_input" placeholder="Email" /><br />
             <button id="ContactUsSubmit">ABSENDEN</button>
         </div>
     </div>
@@ -88,7 +88,47 @@
     $(function () {
 
         $("#ContactUsSubmit").click(function () {
-            window.location.href = "/Home/Success?msg=Sie haben sich erfolgreich beworben. Wir werden uns umgehend bei Ihnen melden!";
+
+            var Period = $("#SubType").val();
+            var Name = $("#Name_input").val();
+            var Strase = $("#Strase_input").val();
+            var Nr = $("#Nr_input").val();
+            var Plz = $("#Plz_input").val();
+            var Ort = $("#Ort_input").val();
+            var Land = $("#Land_input").val();
+            var Telefon = $("#Telefon_input").val();
+            var Email = $("#Email_input").val();
+
+            if (Period < 0 || Period > 1 || Name.length < 1 || Strase.length < 1
+                || Nr.length < 1 || Plz.length < 1 || Ort.length < 1 || Land.length < 1
+                || Telefon.length < 1 || Email.length < 1) {
+                alert("You must enter all fields!");
+                return;
+            }
+
+            _wait();
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/ASendAbo",
+                data: {
+                    "period": Period,
+                    "Name": Name,
+                    "Strase": Strase,
+                    "Nr": Nr,
+                    "Plz": Plz,
+                    "Ort": Ort,
+                    "Land": Land,
+                    "Telefon": Telefon,
+                    "email": Email
+                },
+                success: function (data) {
+                    window.location.href = "/Home/Success?msg=" + "Sie haben uns erfolgreich kontaktiert!";
+                },
+                error: function (data) {
+                    window.location.href = "/Home/Error?msg=" + data;
+                }
+            });
         });
     });
 </script>

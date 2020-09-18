@@ -23,6 +23,7 @@ namespace Echo.Controllers
 
         private static string KontaktDir = "Kontakt";
         private static string Top500Dir = "Top500Kontakt";
+        private static string AboDir = "ABO";
 
         public HomeController(IHostingEnvironment env)
         {
@@ -242,6 +243,35 @@ namespace Echo.Controllers
             return Json("success");
         }
 
+        public async Task<IActionResult> ASendAbo(int period, string Name, string Strase, string Nr,
+            string Plz, string Ort, string Land, string Telefon, string email)
+        {
+            return await Task.Run(() =>
+            {
+                try
+                {
+                    if (!Directory.Exists(AboDir))
+                        Directory.CreateDirectory(AboDir);
+
+                    int i = 1;
+
+                    while (System.IO.File.Exists(Path.Combine(AboDir, DateTime.Now.ToString("yyyyMMdd") + i.ToString())))
+                        i++;
+
+
+                    System.IO.File.WriteAllText(Path.Combine(AboDir, DateTime.Now.ToString("yyyyMMdd") + i.ToString()), $"<p>Period: { (period == 0 ? "3 Monate kostenlos" : "14 Ausgaben um nur € 28,--")}</p><p>Name: {Name}</p>" +
+                        $"<p>Straße: {Strase}</p><p>Nr.: {Nr}</p><p>PLZ: {Plz}</p><p>Ort: {Ort}</p>" +
+                        $"<p>Land: {Land}</p><p>Telefon: {Telefon}</p><p>Email: {email}</p>");
+                }
+                catch (Exception ex)
+                {
+                    return Json(ex.ToString());
+                }
+
+                return Json("success");
+            });
+        }
+
         public static List<string> GetKontaktFiles()
         {
             if (!System.IO.Directory.Exists(KontaktDir))
@@ -253,7 +283,6 @@ namespace Echo.Controllers
 
             return list;
         }
-
         public static List<string> GetTop500Files()
         {
             if (!System.IO.Directory.Exists(Top500Dir))
@@ -262,6 +291,18 @@ namespace Echo.Controllers
             List<string> list = new List<string>();
 
             foreach (string f in Directory.GetFiles(Top500Dir))
+                list.Add(f);
+
+            return list;
+        }
+        public static List<string> GetAboFiles()
+        {
+            if (!System.IO.Directory.Exists(AboDir))
+                return null;
+
+            List<string> list = new List<string>();
+
+            foreach (string f in Directory.GetFiles(AboDir))
                 list.Add(f);
 
             return list;
@@ -294,6 +335,20 @@ namespace Echo.Controllers
             string cont = System.IO.File.ReadAllText(Path.Combine(Top500Dir, fileName));
 
             return View("Top500Details", cont);
+        }
+
+        [Route("/Home/ABODetails/{fileName}")]
+        public IActionResult ABODetails(string fileName)
+        {
+            if (!System.IO.Directory.Exists(AboDir))
+                return View("Error", "File doesn't exist!");
+
+            if (!System.IO.File.Exists(Path.Combine(AboDir, fileName)))
+                return View("Error", "File doesn't exist!");
+
+            string cont = System.IO.File.ReadAllText(Path.Combine(AboDir, fileName));
+
+            return View("ABODetails", cont);
         }
     }
 }

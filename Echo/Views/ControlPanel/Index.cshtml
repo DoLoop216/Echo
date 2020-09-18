@@ -62,11 +62,11 @@
                 </h3>
                 <br />
                 <label>Username</label><br />
-                @Html.TextBoxFor(k => k.Username)
+                @Html.TextBoxFor(k => k.Name)
                 <br />
 
                 <label>Password</label><br />
-                @Html.TextBoxFor(k => k.Password, new { @type = "password" })
+                @Html.TextBoxFor(k => k.PW, new { @type = "password" })
                 <br />
                 <button onclick="_wait()">Login</button>
                 <br />

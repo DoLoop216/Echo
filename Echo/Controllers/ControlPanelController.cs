@@ -424,7 +424,7 @@ namespace Echo.Controllers
         {
             try
             {
-                if(User.Validate(null))
+                if(User.Validate(null) != -1)
                 {
                     string newHash;
                     try

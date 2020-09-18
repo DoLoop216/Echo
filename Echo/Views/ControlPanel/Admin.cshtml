@@ -12,6 +12,15 @@
     {
         top500Files = top500Files.OrderByDescending(x => x).ToList();
     }
+
+
+    List<string> aboFiles = Echo.Controllers.HomeController.GetAboFiles();
+    if (aboFiles != null)
+    {
+        aboFiles = aboFiles.OrderByDescending(x => x).ToList();
+    }
+
+
 }
 
 <style>
@@ -70,7 +79,7 @@
                         {
                             string[] m = t.Split('\\');
                             string s = m[1];
-                        <a href="/Home/Kontakt/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
+                            <a href="/Home/Kontakt/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
                         }
                     }
                 </div>
@@ -82,7 +91,19 @@
                         {
                             string[] m = t.Split('\\');
                             string s = m[1];
-                        <a href="/Home/Top500Details/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
+                            <a href="/Home/Top500Details/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
+                        }
+                    }
+                </div>
+                <div>
+                    <h2>angewandte ABO</h2>
+                    @if (aboFiles != null)
+                    {
+                        foreach (string t in aboFiles)
+                        {
+                            string[] m = t.Split('\\');
+                            string s = m[1];
+                            <a href="/Home/ABODetails/@s" style="display: block;">@string.Format("{0}.{1}.{2} / {3}", s.Substring(6, 2), s.Substring(4, 2), s.Substring(0, 4), s.Substring(8, s.Length - 8))</a>
                         }
                     }
                 </div>
