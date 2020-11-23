@@ -6,6 +6,13 @@
     SideBanners.AddRange(AR.ARNews.Banner.List(0, null));
     List<AR.ARNews.Banner> WideBanners = AR.ARNews.Banner.List(2, null);
 
+    string cover = "/images/ECHO0619-cover.jpg";
+
+    if(File.Exists("arDebug/mainCoverImg.txt"))
+    {
+        cover = File.ReadAllText("arDebug/mainCoverImg.txt");
+    }
+
     int DisplayNSmallAds = 2;
 
     bool admin = false;
@@ -323,8 +330,35 @@
         {
             <div class="col-sm-3 HideOnMobile">
                 <hr style="border: 3px solid red; background-color: none; width: 40%; margin-left: 0" />
-                <div class="Banner">
-                    <img src="~/images/ECHO0619-cover.jpg" />
+                <div class="Banner mainCover">
+                    <img src="@cover" />
+                    @if (admin)
+                    {
+                        <input type="file" name="newCoverFile" id="newCoverFile" onchange="ChangeCover(this)" style="display: none" />
+                        <label for="newCoverFile">change</label>
+                        <script>
+                            function ChangeCover(el) {
+                                var fileData = new FormData();
+                                fileData.append("files", $("#newCoverFile").get(0).files[0]);
+
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Dev/AChangeCover",
+                                    processData: false,
+                                    contentType: false,
+                                    data: fileData,
+                                    async: false,
+                                    success: function (data) {
+                                        if (data == "1") {
+                                            window.location.reload();
+                                        } else {
+                                            alert("There was an error changing the cover!");
+                                        }
+                                    }
+                                });
+                            }
+                        </script>
+                    }
                 </div>
                 @{
                     SideBanners.Shuffle();

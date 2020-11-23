@@ -17,7 +17,6 @@ namespace Echo
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
-            AR.ARWebAuthorization.ARWebAuthorization.AutoUserTimeout = true;
         }
 
         public static void AddVisitor(string WebRoot)

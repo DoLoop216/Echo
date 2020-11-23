@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Echo.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using AR.ARWebAuthorization;
+using AR;
 using System.Threading;
 using AR;
 
@@ -24,7 +24,7 @@ namespace Echo.Controllers
         public IActionResult Index()
         {
             string hash = Request.Cookies["h"];
-            ARWebAuthorizationUser user = ARWebAuthorization.GetUser(hash);
+            ARWebAuthorization.User user = ARWebAuthorization.GetUser(hash);
 
             if (user == null)
                 return View(new AR.ARNews.User());
@@ -424,7 +424,7 @@ namespace Echo.Controllers
         {
             try
             {
-                if(User.Validate(null) != -1)
+                if(User.Validate())
                 {
                     string newHash;
                     try
