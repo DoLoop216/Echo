@@ -424,11 +424,13 @@ namespace Echo.Controllers
         {
             try
             {
-                if(User.Validate())
+                int newID = -1;
+                if(User.Validate(out newID))
                 {
                     string newHash;
                     try
                     {
+                        User = new ARNews.User(newID, null);
                         ARWebAuthorization.LogUser(User, out newHash);
                     }
                     catch(Exception ex)

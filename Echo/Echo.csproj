@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <Reference Include="AR">
-      <HintPath>..\..\AR\AR\bin\Debug\net4\AR.dll</HintPath>
+      <HintPath>C:\AR\AR.dll</HintPath>
     </Reference>
   </ItemGroup>
 
