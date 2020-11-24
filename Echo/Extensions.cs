@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.AspNetCore.Http;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,10 @@ namespace Echo
             }
 
             return false;
+        }
+        public static AR.ARWebAuthorization.User GetUser(this HttpRequest Request)
+        {
+            return AR.ARWebAuthorization.GetUser(Request.Cookies["h"]);
         }
     }
 }

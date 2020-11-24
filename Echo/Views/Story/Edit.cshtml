@@ -70,7 +70,7 @@
     @Html.HiddenFor(x => x.KorisnikID)
     @Html.HiddenFor(x => x.Slika)
     @Html.HiddenFor(x => x.Visits)
-    @Html.HiddenFor(x => x.Tekst);
+    @Html.HiddenFor(x=> x.Tekst)
     <div class="InnerWrapper" style="font-family: Raleway">
         <div class="row">
             <div class="col-md-9">
@@ -95,7 +95,7 @@
                 @Html.EditorFor(x => x.Datum)
                 <br />
                 <br />
-                <button style="display: block; width: 100%; margin-bottom: 10px;">Update</button>
+                <button class="kkkk" style="display: block; width: 100%; margin-bottom: 10px;">Update</button>
 
                 <span class="PerDel" onclick="PermaDel()">Permanent löschen</span>
                 <br />
@@ -174,8 +174,7 @@
             $("#Slika").val(link);
             $("#Gallery").hide();
         });
-
-        $("#Text").keydown(function () {
+        $(".kkkk").click(function () {
             $("#Tekst").val($("#Text .ql-editor").html());
         });
     });

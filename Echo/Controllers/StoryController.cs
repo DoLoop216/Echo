@@ -130,6 +130,7 @@ namespace Echo.Controllers
         {
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
+            
 
             try
             {
@@ -146,7 +147,6 @@ namespace Echo.Controllers
         {
             if (!Networking.isAdmin(Request))
                 return Redirect("/ControlPanel");
-
             try
             {
                 c.KorisnikID = Networking.GetID(Request);
