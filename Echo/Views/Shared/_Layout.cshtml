@@ -1,4 +1,12 @@
 ﻿@inject IHostingEnvironment HostingEnvironment;
+@{
+    var currUser = Context.Request.GetUser();
+
+    if(currUser != null)
+    {
+        currUser.UpdateAliveStatus();
+    }
+}
 
 <!DOCTYPE html>
 <html>

@@ -18,6 +18,7 @@ namespace Echo
         {
             Configuration = configuration;
             AR.AR.ConnectionString = Security.ConnectionString;
+            AR.ARWebAuthorization.UserTimeoutTime = 30;
         }
 
         public IConfiguration Configuration { get; }
