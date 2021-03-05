@@ -11,29 +11,57 @@
 </script>
 
 <style>
-    #MediaData {
-        width: 100%;
-        font-family: Raleway-Regular;
-        display: inline-block;
-        padding-bottom: 50px;
-    }
-
-    #DownloadButton {
-        margin-top: 20px;
-        border: none;
-        background-color: transparent;
-        font-weight: bolder;
-        font-family: Raleway-Bold;
-    }
-
-        #DownloadButton:hover {
-            color: red;
+        #MediaData {
+            width: 100%;
+            font-family: Raleway-Regular;
+            display: inline-block;
+            padding-bottom: 50px;
         }
 
-        #DownloadButton img {
-            border: 1px solid lightgray;
-            margin-bottom: 20px;
+        .DownloadButton {
+            margin-top: 20px;
+            border: none;
+            background-color: transparent;
+            font-weight: bolder;
+            font-family: Raleway-Bold;
+            max-width: 100%;
+            text-align: center;
+            width: 50%;
+            float: left;
         }
+
+            .DownloadButton:hover {
+                color: red;
+                cursor: pointer;
+            }
+
+            .DownloadButton img {
+                border: 1px solid lightgray;
+                margin-bottom: 20px;
+                max-width: 100%;
+            }
+
+    .db12 img {
+        transform: translate(-50%, -50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+    }
+
+    @@media only screen and (max-width: 770px) {
+        .DownloadButton
+        {
+            float: none;
+            width: 100%;
+        }
+
+        .db12 img {
+            transform: initial;
+            position: initial;
+            left: 0;
+            top: 0;
+        }
+    }
 </style>
 
 
@@ -47,16 +75,23 @@
             </h2>
 
             <div class="editable" onclick="window.location.href='/ControlPanel/EditNonFixedText?ID=21'">@Html.Raw(AR.ARNews.NonFixedText.Get(21, null).Text)</div>
-            <button id="DownloadButton">
-                <img src="~/images/mediadatenPricelistImage.jpg" onclick="window.open('/PDF/PL_ECHO_2020.pdf')" />
-                <br />
-                <a href="/PDF/PL_ECHO_2020.pdf" download>Download <br />Mediadaten <br />Salzburg</a>
+            <div style="display: inline-block; width: 100%">
+                <div class="DownloadButton db11">
+                    <img src="/images/PriceListCover2021.png" onclick="window.open('/PDF/PL_ECHO_2021.pdf')" />
+                    <br />
+                    <a href="/PDF/PL_ECHO_2021.pdf" download>Download <br />Mediadaten <br />Salzburg</a>
+                </div>
+                <div class="DownloadButton db12" style="position: relative">
+                    <img src="~/images/pl.jpg" onclick="window.open('/Home/Pricelist')"/>
+                    <br />
+                </div>
 
-            </button><button id="DownloadButton">
-                <img src="~/images/pl.jpg" onclick="window.open('/Home/Pricelist')" />
-                <br />
-            </button>
-
+                <script>
+                    $(function () {
+                        $(".db12").height($(".db11").outerHeight());
+                    });
+                </script>
+            </div>
         </div>
         <div class="col-lg-3">
             <partial name="pShortlist" />
