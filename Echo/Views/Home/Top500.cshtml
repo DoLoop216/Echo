@@ -126,19 +126,12 @@
             FileInfo[] fi = d.GetFiles("*.jpg");
 
 
-            List<string> finalStrings = new List<string>();
             foreach (FileInfo f in fi)
             {
-                finalStrings.Add("/PDF/Top500" + "/" + f.Name);
                 <div style="width: 100%; height: 100%">
                     <img src="@("/PDF/Top500" + "/" + f.Name)" style="width: 100%; height: 100%" />
                 </div>
             }
-
-
-            <script>
-                var top500pdfImages = [ @Html.Raw(finalStrings.Join()) "", "", ]
-            </script>
         }
     </div>
     <style>

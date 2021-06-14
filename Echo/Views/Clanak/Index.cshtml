@@ -13,6 +13,10 @@
     List<AR.ARNews.Banner> SideBanners = AR.ARNews.Banner.List(1, null);
     SideBanners.AddRange(AR.ARNews.Banner.List(0, null));
     int DisplayNSmallAds = 2;
+
+    ViewData["ogImage"] = "https://echosalzburg.at" + Model.Slika.Replace('\\', '/');
+    ViewData["ogDescription"] = Regex.Replace(Model.Tekst, "<.*?>", string.Empty);
+    ViewData["ogType"] = "article";
 }
 
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">

@@ -14,11 +14,27 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Echo</title>
+    <title>@ViewData["Title"] - Echo Salzburg</title>
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css?id=2" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <meta property="og:site_name" content="Echo Salzburg" />
+    <meta property="og:title" content="@Html.Raw(ViewData["Title"]) - Echo Salzburg" />
+    <meta property="og:url" content="@Html.Raw(string.Format("{0}{1}{2}", "https://echosalzburg.at", Context.Request.Path, Context.Request.QueryString))" />
+    @if (!string.IsNullOrWhiteSpace(ViewData["ogType"].ToStringOrDefault()))
+    {
+        <meta property="og:type" content="@ViewData["ogType"].ToString()" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewData["ogDescription"].ToStringOrDefault()))
+    {
+        <meta property="og:description" content="@Html.Raw(ViewData["ogDescription"].ToString())" />
+    }
+    @if (!string.IsNullOrWhiteSpace(ViewData["ogImage"].ToStringOrDefault()))
+    {
+        <meta property="og:image" content="@Html.Raw(ViewData["ogImage"].ToString())" />
+    }
 </head>
 
 <body>

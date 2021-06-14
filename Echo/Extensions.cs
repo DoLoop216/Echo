@@ -37,5 +37,12 @@ namespace Echo
         {
             return AR.ARWebAuthorization.GetUser(Request.Cookies["h"]);
         }
+        public static string ToStringOrDefault(this object sender)
+        {
+            if (sender == null)
+                return "";
+
+            return sender.ToString();
+        }
     }
 }

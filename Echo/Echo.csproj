@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Reference Include="AR">
-      <HintPath>C:\AR\AR.dll</HintPath>
+      <HintPath>..\AR.dll</HintPath>
     </Reference>
   </ItemGroup>
 
